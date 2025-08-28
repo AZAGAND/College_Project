@@ -84,8 +84,7 @@ if (isset($_GET['delete'])) {
                                 <?= $r['status'] ? 'Nonaktifkan' : 'Aktifkan' ?>
                             </a>
                             <a href="?delete=<?= $r['idrole_user'] ?>" class="btn delete"
-                                onclick="return confirm('Hapus role ini dari user?')">Hapus</a> 
-                                <a href="knfjlsekf"></a>    
+                                onclick="return confirm('Hapus role ini dari user?')">Hapus</a>    
                         </div>
                     </td>
                 </tr>
