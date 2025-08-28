@@ -1,0 +1,59 @@
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f8;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #3498db;
+            color: white;
+        }
+
+        a.btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .active {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .inactive {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .delete {
+            background: #e67e22;
+            color: white;
+        }
+
+        .add {
+            background: #2980b9;
+            color: white;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .aksi {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
