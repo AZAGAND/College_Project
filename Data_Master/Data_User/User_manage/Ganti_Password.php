@@ -1,5 +1,16 @@
 <?php
 session_start();
+// Cegah akses jika belum login
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
+    exit();
+}
+
+// Tambahkan header anti-cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 $iduser_target = $_GET['id'] ?? null;
 if (!$iduser_target)
     die("ID user tidak ditemukan!");
