@@ -7,7 +7,7 @@ $db = new DBConnection();
 $userObj = new User($db);
 $allUsers = $userObj->getAllUsers();
 
-// Ambil notif dari session
+// Ambil notifikasi dari session
 $message = $_SESSION['success'] ?? $_SESSION['error'] ?? '';
 unset($_SESSION['success'], $_SESSION['error']);
 ?>
@@ -17,17 +17,22 @@ unset($_SESSION['success'], $_SESSION['error']);
 <head>
     <meta charset="UTF-8">
     <title>Data User</title>
-    <link rel="stylesheet" href="../../CSS/data_user.css">
+    <link rel="stylesheet" href="/PHP_Native_Web_OOP-Modul4/CSS/data_user.css">
 </head>
 
 <body>
     <h2>Manajemen User</h2>
-    <a href="User_manage/tambah_user.php" class="btn btn-add">+ Tambah User</a>
+
+    <!-- Tombol Tambah User -->
+    <a href="tambah_user.php" class="btn btn-add">+ Tambah User</a>
+    <!-- Toast Notifikasi -->
     <?php if ($message): ?>
         <div id="toast" class="<?= strpos($message, '✅') !== false ? 'success' : 'error'; ?>">
             <?= htmlspecialchars($message) ?>
         </div>
     <?php endif; ?>
+
+    <!-- Table User -->
     <table>
         <tr>
             <th>ID</th>
@@ -47,17 +52,19 @@ unset($_SESSION['success'], $_SESSION['error']);
                         <a href="User_manage/edit_user.php?id=<?= $u['iduser'] ?>" class="btn btn-edit">Edit</a>
                         <a href="User_manage/Ganti_Password.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
                             onclick="return confirm('Ganti password user ini?')">Ganti Password</a>
-                        <a href="User_manage/Ganti_Email.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
-                            onclick="return confirm('Ganti email user ini?')">Ganti Email</a>
+                        <a href="/PHP_Native_Web_OOP-Modul4/Views/Data_Master/Data_User/User_manage/Ganti_Email.php?id=<?= $u['iduser'] ?>"
+                            class="btn btn-reset" onclick="return confirm('Ganti email user ini?')">Ganti Email</a>
                     </div>
                 </td>
-
             </tr>
         <?php endforeach; ?>
     </table>
+
+    <!-- Tombol Kembali -->
     <div class="table-footer">
         <a href="../Data_Master.php" class="btn btn-add">⬅ Kembali ke Data Master</a>
     </div>
+
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
