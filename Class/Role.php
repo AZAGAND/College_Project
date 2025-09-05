@@ -42,4 +42,3 @@ class role
         return $stmt->execute([$id]);
     }
 }
-?>

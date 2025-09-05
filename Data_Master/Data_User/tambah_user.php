@@ -13,7 +13,7 @@
         <?php if (!empty($notif)): ?>
             <p class="notif"><?= $notif; ?></p>
         <?php endif; ?>
-        <form method="post"  action="tambah_user_process.php">
+        <form method="post" action="../../Controller/tambah_user_process.php">
             <label>Nama</label>
             <input type="text" name="nama" required>
 
