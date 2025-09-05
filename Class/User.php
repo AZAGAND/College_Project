@@ -102,4 +102,13 @@ class User
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+
+    public function updatePassword($id, $password)
+    {
+        $hashed = password_hash($password, PASSWORD_BCRYPT);
+        $stmt = $this->conn->prepare("UPDATE user SET password = :password WHERE iduser = :id");
+        $stmt->bindParam(':password', $hashed);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 }

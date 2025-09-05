@@ -1,26 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../DB/dbconnection.php';
 require_once __DIR__ . '/../../Class/User.php';
-require_once __DIR__ . '/../../Class/Role.php';
+require_once __DIR__ . '/../../DB/dbconnection.php';
 
-// cek login
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../Login/login_RSHP.php");
-    exit;
-}
-
-// buat object
 $db = new DBConnection();
 $userObj = new User($db);
-
-// ambil semua user
 $allUsers = $userObj->getAllUsers();
-// Ambil notifikasi
-$message = $_SESSION['message'] ?? '';
-unset($_SESSION['message']);
-?>
 
+// Ambil notif dari session
+$message = $_SESSION['success'] ?? $_SESSION['error'] ?? '';
+unset($_SESSION['success'], $_SESSION['error']);
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -32,7 +22,12 @@ unset($_SESSION['message']);
 
 <body>
     <h2>Manajemen User</h2>
-    <a href="tambah_user.php" class="btn btn-add">+ Tambah User</a>
+    <a href="User_manage/tambah_user.php" class="btn btn-add">+ Tambah User</a>
+    <?php if ($message): ?>
+        <div id="toast" class="<?= strpos($message, '✅') !== false ? 'success' : 'error'; ?>">
+            <?= htmlspecialchars($message) ?>
+        </div>
+    <?php endif; ?>
     <table>
         <tr>
             <th>ID</th>
@@ -50,18 +45,29 @@ unset($_SESSION['message']);
                 <td>
                     <div class="aksi">
                         <a href="User_manage/edit_user.php?id=<?= $u['iduser'] ?>" class="btn btn-edit">Edit</a>
-                        <a href="Ganti_password.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
+                        <a href="User_manage/Ganti_Password.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
                             onclick="return confirm('Ganti password user ini?')">Ganti Password</a>
-                        <a href="Ganti_email.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
+                        <a href="User_manage/Ganti_Email.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
                             onclick="return confirm('Ganti email user ini?')">Ganti Email</a>
                     </div>
                 </td>
+
             </tr>
         <?php endforeach; ?>
-
     </table>
-    <br>
-    <a href="../Data_Master.php" class="btn btn-add"> ⬅ Kembali ke Data Master</a>
+    <div class="table-footer">
+        <a href="../Data_Master.php" class="btn btn-add">⬅ Kembali ke Data Master</a>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 4000);
+            }
+        });
+    </script>
 </body>
 
 </html>

@@ -9,9 +9,10 @@ h2 {
 }
 
 table {
-        border-collapse: collapse;
         width: 100%;
-        margin-top: 20px;
+        border-collapse: collapse;
+        table-layout: fixed;
+        /* pastikan kolom tetap proporsional */
 }
 
 th,
@@ -34,8 +35,23 @@ th {
 }
 
 .btn-add {
-        background: green;
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: green;
         color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        margin-bottom: 15px;
+        /* <-- penting, beri jarak ke tabel */
+}
+
+.header-actions {
+        display: flex;
+        justify-content: space-between;
+        /* judul kiri, tombol kanan */
+        align-items: center;
+        margin-bottom: 20px;
 }
 
 .btn-edit {
@@ -51,10 +67,65 @@ th {
 .aksi {
         display: flex;
         justify-content: center;
-        /* rata tengah */
-        align-items: center;
-        /* tengah vertikal */
-        gap: 8px;
+        /* horizontal center */
+        gap: 10px;
         /* jarak antar tombol */
-        padding: 0%;
+}
+
+.aksi a.btn {
+        padding: 5px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        font-size: 14px;
+}
+
+.btn-edit {
+        background-color: #2256e6;
+}
+
+.btn-reset {
+        background-color: #e62222;
+}
+
+.table-footer {
+        margin-top: 20px;
+        /* jarak dari tabel */
+        text-align: left;
+        /* tombol di kiri */
+}
+
+/* atau kalau mau tombol di tengah */
+.table-footer-center {
+        margin-top: 20px;
+        text-align: center;
+}
+
+
+#toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        min-width: 250px;
+        padding: 15px 20px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        z-index: 9999;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.5s, transform 0.5s;
+}
+
+#toast.success {
+        background-color: #2ecc71;
+}
+
+#toast.error {
+        background-color: #e74c3c;
+}
+
+#toast.show {
+        opacity: 1;
+        transform: translateY(0);
 }
