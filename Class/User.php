@@ -11,20 +11,31 @@ class User
         $this->conn = $db->getConnection();
     }
 
-    public function getallusers()
+    public function getAllUsers()
     {
-        $stmt = $this->conn->prepare("SELECT iduser,nama,email FROM user");
+        $sql = "SELECT u.iduser, u.nama, u.email, r.nama_role
+            FROM user u
+            LEFT JOIN role_user ru ON u.iduser = ru.iduser
+            LEFT JOIN role r ON ru.idrole = r.idrole";
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getuserbyid($id)
+
+
+    public function getUserById($id)
     {
-        $stmt = $this->conn->prepare("SELECT iduser,nama,email FROM user WHERE iduser = :id");
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
+        $sql = "SELECT u.iduser, u.nama, u.email, r.nama_role
+            FROM user u
+            LEFT JOIN role_user ru ON u.iduser = ru.iduser
+            LEFT JOIN role r ON ru.idrole = r.idrole
+            WHERE u.iduser = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
     public function getUserByEmail($email)
     {
         $stmt = $this->conn->prepare("SELECT * FROM user WHERE email = :email LIMIT 1");
@@ -71,47 +82,3 @@ class User
     }
 }
 
-class role
-{
-    private $conn;
-
-    public function __construct(DBConnection $db)
-    {
-        $this->conn = $db->getConnection();
-    }
-
-    public function getallroles()
-    {
-        $stmt = $this->conn->prepare("Select * from role");
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getrolesbyuser($iduser)
-    {
-        $sql = "SELECT r.idrole,r.nama_role
-            FROM role_user ru
-            JOIN role r ON ru.idrole = r.idrole
-            WHERE ru.iduser = :iduser AND ru.status = 1";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([":iduser" => $iduser]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function addrole($nama_role)
-    {
-        $stmt = $this->conn->prepare("INSERT INTO role (nama_role) VALUES (?)");
-        return $stmt->execute([$nama_role]);
-    }
-    public function updaterole($id, $nama_role)
-    {
-        $stmt = $this->conn->prepare("UPDATE role SET nama_role = ? WHERE idrole = ?");
-        return $stmt->execute([$nama_role, $id]);
-    }
-    public function deleterole($id)
-    {
-        $stmt = $this->conn->prepare("DELETE FROM role WHERE idrole = ?");
-        return $stmt->execute([$id]);
-    }
-}
-?>

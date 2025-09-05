@@ -1,7 +1,8 @@
 <?php
 session_start();
-require_once __DIR__ . '/../DB/dbconnection.php';
-require_once __DIR__ . '/../DB/Class.php';
+require_once __DIR__ . '/../../DB/dbconnection.php';
+require_once __DIR__ . '/../../Class/User.php';
+require_once __DIR__ . '/../../Class/Role.php';
 
 // cek login
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -21,7 +22,7 @@ $allUsers = $userObj->getAllUsers();
 <head>
     <meta charset="UTF-8">
     <title>Data User</title>
-    <link rel="stylesheet" href="../CSS/data_user.css">
+    <link rel="stylesheet" href="../../CSS/data_user.css">
 </head>
 <body>
     <h2>Manajemen User</h2>
@@ -48,6 +49,6 @@ $allUsers = $userObj->getAllUsers();
         <?php endforeach; ?>
     </table>
     <br>
-    <a href="Data_Master.php" class="btn btn-add"> ⬅ Kembali ke Data Master</a>
+    <a href="../Data_Master.php" class="btn btn-add"> ⬅ Kembali ke Data Master</a>
 </body>
 </html>

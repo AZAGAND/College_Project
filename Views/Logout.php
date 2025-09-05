@@ -6,6 +6,5 @@ $_SESSION = [];
 session_unset();
 session_destroy();
 
-// redirect ke login
-header("Location: ../../Interface/login_RSHP.php");
+header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
 exit();

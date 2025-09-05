@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: ../../Interface/login_RSHP.php");
+    header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
     exit();
 }
 ?>
