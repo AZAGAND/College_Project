@@ -49,7 +49,7 @@ unset($_SESSION['message']);
                 <td><?= $u['nama_role'] ?? 'Belum ada role' ?></td>
                 <td>
                     <div class="aksi">
-                        <a href="edit_user.php?id=<?= $u['iduser'] ?>" class="btn btn-edit">Edit</a>
+                        <a href="User_manage/edit_user.php?id=<?= $u['iduser'] ?>" class="btn btn-edit">Edit</a>
                         <a href="Ganti_password.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"
                             onclick="return confirm('Ganti password user ini?')">Ganti Password</a>
                         <a href="Ganti_email.php?id=<?= $u['iduser'] ?>" class="btn btn-reset"

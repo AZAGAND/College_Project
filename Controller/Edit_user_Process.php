@@ -1,27 +1,29 @@
 <?php
-include __DIR__ . '/../DB/dbconnection.php';
 session_start();
+require_once __DIR__ . '/../DB/dbconnection.php';
+require_once __DIR__ . '/../Class/User.php';
+require_once __DIR__ . '/../Class/Role.php';
 
-$id = $_GET['id'] ?? 0;
-$notif = "";
+$db = new DBConnection();
+$userObj = new User($db);
 
-// ambil data user
-$stmt = $conn->prepare("SELECT * FROM user WHERE iduser = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
-
-// kalau form disubmit → update nama
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama = $_POST['nama'];
-    $update = $conn->prepare("UPDATE user SET nama=? WHERE iduser=?");
-    $update->bind_param("si", $nama, $id);
-    if ($update->execute()) {
-        $notif = "✅ Data berhasil disimpan!";
-        // refresh data biar nama terbaru tampil
-        $user['nama'] = $nama;
-    } else {
-        $notif = "❌ Gagal menyimpan data!";
+    $id    = $_POST['iduser'] ?? null;
+    $nama  = trim($_POST['nama']);
+
+    if (!$id) {
+        $_SESSION['message'] = "❌ ID user tidak ditemukan!";
+        header("Location: ../Data_Master/Data_User/Data_user.php");
+        exit;
     }
+
+    try {
+        $userObj->updateuser($id, $nama, $userObj->getUserById($id)['email']); // update nama saja
+        $_SESSION['message'] = "✅ User berhasil diperbarui!";
+    } catch (Exception $e) {
+        $_SESSION['message'] = "❌ Error: " . $e->getMessage();
+    }
+
+    header("Location: ../Data_Master/Data_User/Data_user.php");
+    exit;
 }
-?>

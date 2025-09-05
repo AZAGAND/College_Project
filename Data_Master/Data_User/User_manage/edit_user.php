@@ -1,29 +1,19 @@
 <?php
-include __DIR__ . '/../DB/dbconnection.php';
 session_start();
+require_once __DIR__ . '/../../../Class/User.php';
+require_once __DIR__ . '/../../../DB/dbconnection.php';
 
-$id = $_GET['id'] ?? 0;
-$notif = "";
+$db = new DBConnection();
+$userObj = new User($db);
 
-// ambil data user
-$stmt = $conn->prepare("SELECT * FROM user WHERE iduser = ?");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
+$id = $_GET['id'] ?? null;
+if (!$id) die("ID user tidak ditemukan");
 
-// kalau form disubmit → update nama
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama = $_POST['nama'];
-    $update = $conn->prepare("UPDATE user SET nama=? WHERE iduser=?");
-    $update->bind_param("si", $nama, $id);
-    if ($update->execute()) {
-        $notif = "✅ Data berhasil disimpan!";
-        // refresh data biar nama terbaru tampil
-        $user['nama'] = $nama;
-    } else {
-        $notif = "❌ Gagal menyimpan data!";
-    }
-}
+$user = $userObj->getUserById($id);
+if (!$user) die("User tidak ditemukan");
+
+$notif = $_SESSION['message'] ?? '';
+unset($_SESSION['message']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -31,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../CSS/edit_user.css">
+    <link rel="stylesheet" href="../../../CSS/edit_user.css">
     <style>
         .notification {
             padding: 10px;
@@ -40,11 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: bold;
             text-align: center;
         }
+
         .notification.success {
             background-color: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+
         .notification.error {
             background-color: #f8d7da;
             color: #721c24;
@@ -61,12 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php echo $notif; ?>
             </div>
         <?php endif; ?>
-        <form method="post">
+        <form method="post" action="/PHP_Native_Web_OOP-Modul4/Controller/edit_user_process.php">
+            <input type="hidden" name="iduser" value="<?= htmlspecialchars($user['iduser']); ?>">
             <label>Nama User</label>
             <input type="text" name="nama" value="<?= htmlspecialchars($user['nama']); ?>" required>
             <button type="submit">Simpan Perubahan</button>
         </form>
-        <a href="data_user.php">← Kembali ke Data User</a>
+
+        <a href="../data_user.php">← Kembali ke Data User</a>
     </div>
 </body>
 
