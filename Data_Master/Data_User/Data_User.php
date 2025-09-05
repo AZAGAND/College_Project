@@ -1,17 +1,20 @@
 <?php
 session_start();
 require_once __DIR__ . '/../DB/dbconnection.php';
-// hanya admin yang boleh akses
-if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'Administrator') {
-    header("Location: login.php");
+require_once __DIR__ . '/../DB/Class.php';
+
+// cek login
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: ../Login/login_RSHP.php");
     exit;
 }
 
-// ambil data user
-$result = $conn->query("SELECT u.iduser, u.nama, u.email, r.nama_role
-                        FROM user u
-                        LEFT JOIN role_user ru ON u.iduser = ru.iduser
-                        LEFT JOIN role r ON ru.idrole = r.idrole");
+// buat object
+$db = new DBConnection();
+$userObj = new User($db);
+
+// ambil semua user
+$allUsers = $userObj->getAllUsers();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -27,12 +30,12 @@ $result = $conn->query("SELECT u.iduser, u.nama, u.email, r.nama_role
         <tr>
             <th>ID</th><th>Nama</th><th>Email</th><th>Role</th><th>Aksi</th>
         </tr>
-        <?php while($row = $result->fetch_assoc()): ?>
+        <?php foreach ($allUsers as $u): ?>
         <tr>
-            <td><?= $row['iduser'] ?></td>
-            <td><?= $row['nama'] ?></td>
-            <td><?= $row['email'] ?></td>
-            <td><?= $row['nama_role'] ?? 'Belum ada role' ?></td>
+            <td><?= $u['iduser'] ?></td>
+            <td><?= $u['nama'] ?></td>
+            <td><?= $u['email'] ?></td>
+            <td><?= $u['nama_role'] ?? 'Belum ada role' ?></td>
             <td>
                 <!-- ✅ Tombol dibungkus div.aksi -->
                 <div class="aksi">
@@ -42,7 +45,7 @@ $result = $conn->query("SELECT u.iduser, u.nama, u.email, r.nama_role
                 </div>
             </td>
         </tr>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </table>
     <br>
     <a href="Data_Master.php" class="btn btn-add"> ⬅ Kembali ke Data Master</a>

@@ -1,38 +1,23 @@
 <?php
 session_start();
 require_once __DIR__ . '/../DB/dbconnection.php';
+require_once __DIR__ . '/../DB/Class.php';
 
-// mengambil semua user + role nya
-$query = "
-    SELECT u.iduser, u.nama, u.email, r.idrole, r.nama_role, ru.status, ru.idrole_user
-    FROM user u
-    JOIN role_user ru ON u.iduser = ru.iduser
-    JOIN role r ON ru.idrole = r.idrole
-    ORDER BY u.iduser
-";
-$result = $conn->query($query);
-
-// bikin array users
-$users = [];
-while ($row = $result->fetch_assoc()) {
-    $id = $row['iduser'];
-
-    if (!isset($users[$id])) {
-        $users[$id] = [
-            "iduser" => $row['iduser'],
-            "nama" => $row['nama'],
-            "email" => $row['email'],
-            "roles" => []
-        ];
-    }
-
-    $users[$id]['roles'][] = [
-        "idrole_user" => $row['idrole_user'],
-        "idrole" => $row['idrole'],
-        "nama_role" => $row['nama_role'],
-        "status" => $row['status']
-    ];
+// cek login
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: ../Login/login_RSHP.php");
+    exit;
 }
+
+$db = new DBConnection();
+$roleObj = new Role($db);
+
+// ambil semua role
+$allRoles = $roleObj->getAllRoles();
+
+// contoh: ambil role untuk user login
+$userRoles = $roleObj->getRolesByUser($_SESSION['user']['id']);
+
 
 // toggle status
 if (isset($_GET['toggle'])) {

@@ -17,7 +17,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 <body>
         <?php
-        include("../../Data_Master/menu.php");
+        include("../../Navigation/menu.php");
         ?>
     <h1>Hello Admin</h1>
     <p>Welcome to the admin dashboard.</p>
