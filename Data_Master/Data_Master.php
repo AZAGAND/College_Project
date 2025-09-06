@@ -27,13 +27,10 @@ header("Pragma: no-cache");
     </nav>
 
     <div class="menu">
-        <!-- Arahkan ke Data_User.php -->
         <a href="Data_User/Data_User.php">👤 Data User</a>
-
-        <!-- Arahkan ke role_management.php -->
         <a href="Role_Management/role_management.php">⚙️ Manajemen Role</a>
-
-        <!-- Arahkan balik ke halaman Admin -->
+        <a href="Data_User/Data_User.php">Menu Ras Hewan</a>
+        <a href="../Roles/Admin/Views/Jenis_hewan.php">menu Jenis Hewan</a>
         <a href="../Roles/Admin/admin.php">⬅ Back to Admin Page</a>
     </div>
 </body>
