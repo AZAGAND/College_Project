@@ -3,15 +3,13 @@ session_start();
 require_once __DIR__ . '/../../DB/dbconnection.php';
 require_once __DIR__ . '/../../Class/Role.php';
 
-// cek login
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../Login/login_RSHP.php");
     exit;
 }
 
-// koneksi
 $db = new DBConnection();
-$roleObj = new role($db); // ✅ sesuai class kamu (huruf kecil)
+$roleObj = new role($db);
 
 // ambil semua user dengan roles
 $users = $roleObj->getAllUsersWithRoles();
