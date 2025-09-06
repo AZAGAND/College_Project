@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../DB/dbconnection.php';
-require_once __DIR__ . '/../DB/Class.php';
+require_once __DIR__ . '/../../DB/dbconnection.php';
+require_once __DIR__ . '/../../Class/Role.php';
 
 // cek login
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -9,20 +9,17 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit;
 }
 
+// koneksi
 $db = new DBConnection();
-$roleObj = new Role($db);
+$roleObj = new role($db); // ✅ sesuai class kamu (huruf kecil)
 
-// ambil semua role
-$allRoles = $roleObj->getAllRoles();
-
-// contoh: ambil role untuk user login
-$userRoles = $roleObj->getRolesByUser($_SESSION['user']['id']);
-
+// ambil semua user dengan roles
+$users = $roleObj->getAllUsersWithRoles();
 
 // toggle status
 if (isset($_GET['toggle'])) {
     $idrole_user = (int) $_GET['toggle'];
-    $conn->query("UPDATE role_user SET status = IF(status=1,0,1) WHERE idrole_user=$idrole_user");
+    $roleObj->toggleRoleStatus($idrole_user);
     header("Location: role_management.php");
     exit();
 }
@@ -30,7 +27,7 @@ if (isset($_GET['toggle'])) {
 // hapus role
 if (isset($_GET['delete'])) {
     $idrole_user = (int) $_GET['delete'];
-    $conn->query("DELETE FROM role_user WHERE idrole_user=$idrole_user");
+    $roleObj->deleteRoleFromUser($idrole_user);
     header("Location: role_management.php");
     exit();
 }
@@ -41,13 +38,13 @@ if (isset($_GET['delete'])) {
 <head>
     <meta charset="UTF-8">
     <title>Manajemen Role</title>
-
+    <link rel="stylesheet" href="../../CSS/role_management.css">
 </head>
 
 <body>
     <h2>Manajemen Role</h2>
     <a href="tambah_role.php" class="btn add">+ Tambah Role Baru</a>
-    <link rel="stylesheet" href="../CSS/role_management.css">
+
     <table>
         <tr>
             <th>Nama User</th>
@@ -63,20 +60,19 @@ if (isset($_GET['delete'])) {
                     <td><?= htmlspecialchars($u['email']) ?></td>
                     <td><?= htmlspecialchars($r['nama_role']) ?></td>
                     <td><?= $r['status'] ? "Aktif" : "Tidak Aktif" ?></td>
-                    <td>
-                        <div class="aksi">
-                            <a href="?toggle=<?= $r['idrole_user'] ?>" class="btn <?= $r['status'] ? 'inactive' : 'active' ?>">
-                                <?= $r['status'] ? 'Nonaktifkan' : 'Aktifkan' ?>
-                            </a>
-                            <a href="?delete=<?= $r['idrole_user'] ?>" class="btn delete"
-                                onclick="return confirm('Hapus role ini dari user?')">Hapus</a>    
-                        </div>
+                    <td class="aksi">
+                        <a href="?toggle=<?= $r['idrole_user'] ?>" class="btn <?= $r['status'] ? 'inactive' : 'active' ?>">
+                            <?= $r['status'] ? 'Nonaktifkan' : 'Aktifkan' ?>
+                        </a>
+                        <a href="?delete=<?= $r['idrole_user'] ?>" class="btn delete"
+                            onclick="return confirm('Hapus role ini dari user?')">Hapus</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         <?php endforeach; ?>
     </table>
-    <a href="Data_Master.php" class="btn add">⬅ kembali ke Data master</a>
+
+    <a href="../Data_Master.php" class="btn add">⬅ Kembali ke Data Master</a>
 </body>
 
 </html>
