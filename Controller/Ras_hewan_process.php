@@ -23,4 +23,27 @@ class Ras_Hewan {
     public function getJenis() {
         return $this->model->getJenis();
     }
+    public function getGroupedData() {
+        $dataRas = $this->model->getAll();
+        $groupedData = [];
+        
+        foreach ($dataRas as $ras) {
+            $jenisNama = $ras['nama_jenis_hewan'];
+            
+            if (!isset($groupedData[$jenisNama])) {
+                $groupedData[$jenisNama] = [
+                    'jenis_nama' => $jenisNama,
+                    'ras_list' => []
+                ];
+            }
+            
+            $groupedData[$jenisNama]['ras_list'][] = [
+                'id' => $ras['idras_hewan'],
+                'nama' => $ras['nama_ras']
+            ];
+        }
+        
+        return $groupedData;
+    }
 }
+

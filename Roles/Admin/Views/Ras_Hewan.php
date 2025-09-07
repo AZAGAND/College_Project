@@ -27,7 +27,7 @@ if (isset($_GET['hapus'])) {
 
 // Ambil data
 $dataRas = $rasObj->index();
-$dataJenis = $jenisObj->index();
+$groupedData = $rasObj->getGroupedData();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -54,30 +54,50 @@ $dataJenis = $jenisObj->index();
             <button type="submit" name="tambah" class="btn btn-green">+ Tambah Ras</button>
         </form>
 
-        <!-- Tabel Data -->
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama Ras</th>
-                    <th>Jenis Hewan</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($dataRas as $row): ?>
+        <!-- Tabel Data Terkelompok -->
+        <div class="table-container">
+            <table>
+                <thead>
                     <tr>
-                        <td><?= $row['idras_hewan']; ?></td>
-                        <td><?= $row['nama_ras']; ?></td>
-                        <td><?= $row['nama_jenis_hewan']; ?></td>
-                        <td class="aksi">
-                            <a href="?hapus=<?= $row['idras_hewan']; ?>" onclick="return confirm('Yakin hapus data ini?')"
-                                class="btn btn-red">Hapus</a>
-                        </td>
+                        <th>No</th>
+                        <th>Jenis Hewan</th>
+                        <th>Daftar Ras</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php 
+                    $no = 1;
+                    foreach ($groupedData as $jenis => $data): ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td class="jenis-cell"><?= htmlspecialchars($data['jenis_nama']); ?></td>
+                            <td>
+                                <div class="ras-container">
+                                    <?php foreach ($data['ras_list'] as $ras): ?>
+                                        <div class="ras-item">
+                                            <span class="ras-name"><?= htmlspecialchars($ras['nama']); ?></span>
+                                            <button class="delete-ras" 
+                                                    onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
+                                                    title="Hapus <?= htmlspecialchars($ras['nama']); ?>">
+                                                ×
+                                            </button>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    
+                    <?php if (empty($groupedData)): ?>
+                        <tr>
+                            <td colspan="3" style="text-align: center; padding: 40px; color: #666;">
+                                Belum ada data ras hewan
+                            </td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Tombol Kembali -->
         <div class="table-footer">

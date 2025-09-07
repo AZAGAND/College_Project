@@ -15,16 +15,18 @@ header("Pragma: no-cache");
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../CSS/Data_Master.css" rel="stylesheet">
     <title>Data Master</title>
 </head>
+
 <body>
-    <nav>
-        <a href="Data_Master.php">🏠 Data Master</a>
-    </nav>
+    <?php
+    include("../Navigation/menu.php");
+    ?>
 
     <div class="menu">
         <a href="Data_User/Data_User.php">👤 Data User</a>
@@ -34,4 +36,5 @@ header("Pragma: no-cache");
         <a href="../Roles/Admin/admin.php">⬅ Back to Admin Page</a>
     </div>
 </body>
+
 </html>
