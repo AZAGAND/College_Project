@@ -1,31 +1,31 @@
-<?php
-include __DIR__ . '/../DB/dbconnection.php';
-session_start();
-// Cegah akses jika belum login
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
-    exit();
-}
+<!-- <?php
+// include __DIR__ . '/../DB/dbconnection.php';
+// session_start();
+// // Cegah akses jika belum login
+// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//     header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
+//     exit();
+// }
 
 // Tambahkan header anti-cache
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
+// header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+// header("Cache-Control: post-check=0, pre-check=0", false);
+// header("Pragma: no-cache");
 
-$id = $_GET['id'] ?? 0;
+// $id = $_GET['id'] ?? 0;
 
 // password default
-$newPass = password_hash("123456", PASSWORD_BCRYPT);
+// $newPass = password_hash("123456", PASSWORD_BCRYPT);
 
-$stmt = $conn->prepare("UPDATE user SET password=? WHERE iduser=?");
-$stmt->bind_param("si", $newPass, $id);
+// $stmt = $conn->prepare("UPDATE user SET password=? WHERE iduser=?");
+// 
 
 // Simpan status eksekusi dalam variabel
 $success = false;
-if ($stmt->execute()) {
-    $success = true;
-}
-?>
+// if ($stmt->execute()) {
+//     $success = true;
+// }
+// ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,4 +48,4 @@ if ($stmt->execute()) {
     </div>
 
 </body>
-</html>
+</html> -->

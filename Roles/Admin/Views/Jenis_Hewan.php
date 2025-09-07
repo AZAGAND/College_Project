@@ -3,11 +3,26 @@ session_start();
 require_once __DIR__ . '/../../../DB/dbconnection.php';
 require_once __DIR__ . '/../../../Controller/Jenis_hewan_process.php';
 
+// Cegah akses jika belum login
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
+    exit();
+}
+
+// Tambahkan header anti-cache
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 $db = new DBConnection();
 $conn = $db->getConnection();
 
 $controller = new Jenis_Hewan($conn);
 
+if (isset($_SESSION['error'])) {
+    echo '<p style="color:red;">'.$_SESSION['error'].'</p>';
+    unset($_SESSION['error']);
+}
 // Tambah
 if (isset($_POST['tambah'])) {
     $controller->store($_POST['nama_jenis']);
@@ -22,7 +37,7 @@ if (isset($_GET['hapus'])) {
     exit;
 }
 
-$data = $controller->index();
+$data = $controller->getall();
 ?>
 
 
@@ -57,7 +72,6 @@ $data = $controller->index();
                     <td><?= $row['idjenis_hewan']; ?></td>
                     <td><?= $row['nama_jenis_hewan']; ?></td>
                     <td class="aksi">
-                        <a href="edit_jenis.php?id=<?= $row['idjenis_hewan']; ?>" class="btn btn-blue">Edit</a>
                         <a href="?hapus=<?= $row['idjenis_hewan']; ?>" onclick="return confirm('Yakin hapus?')"
                             class="btn btn-red">Hapus</a>
                     </td>
