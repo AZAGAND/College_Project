@@ -8,7 +8,7 @@ class Ras_Hewan {
         $this->model = new RasHewan($db);
     }
 
-    public function index() {
+    public function getall() {
         return $this->model->getAll();
     }
 

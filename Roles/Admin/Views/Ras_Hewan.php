@@ -26,7 +26,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // Ambil data
-$dataRas = $rasObj->index();
+$dataRas = $rasObj->getall();
 $dataJenis = $jenisObj->index();
 $groupedData = $rasObj->getGroupedData();
 ?>
