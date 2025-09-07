@@ -44,7 +44,6 @@ class role
         return $stmt->execute([$id]);
     }
 
-    // ✅ tambahan untuk role management
     public function getAllUsersWithRoles()
     {
         $sql = "SELECT u.iduser, u.nama, u.email, r.nama_role, ru.idrole_user, ru.status
