@@ -36,7 +36,7 @@ $data = $controller->index();
 </head>
 
 <body>
-    <h2>📋 Master Jenis Hewan</h2>
+    <h2>📋 Menu Jenis Hewan</h2>
 
     <form method="post">
         <input type="text" name="nama_jenis" placeholder="Nama Jenis Hewan" required>

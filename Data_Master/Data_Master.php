@@ -29,8 +29,8 @@ header("Pragma: no-cache");
     <div class="menu">
         <a href="Data_User/Data_User.php">👤 Data User</a>
         <a href="Role_Management/role_management.php">⚙️ Manajemen Role</a>
-        <a href="../Roles/Admin/Views/Ras_hewan.php">Menu Ras Hewan</a>
-        <a href="../Roles/Admin/Views/Jenis_hewan.php">menu Jenis Hewan</a>
+        <a href="../Roles/Admin/Views/Ras_hewan.php">🐾 Menu Ras Hewan</a>
+        <a href="../Roles/Admin/Views/Jenis_hewan.php">🐱 menu Jenis Hewan</a>
         <a href="../Roles/Admin/admin.php">⬅ Back to Admin Page</a>
     </div>
 </body>

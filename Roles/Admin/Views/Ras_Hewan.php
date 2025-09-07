@@ -40,7 +40,7 @@ $dataJenis = $jenisObj->index();
 
 <body>
     <div class="container">
-        <h2>🐾 Master Ras Hewan</h2>
+        <h2>🐾 Menu Ras Hewan</h2>
 
         <!-- Form Tambah -->
         <form method="post">
