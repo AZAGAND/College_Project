@@ -12,7 +12,8 @@ class RasHewan
     {
         $sql = "SELECT r.idras_hewan, r.nama_ras, j.nama_jenis_hewan
                 FROM ras_hewan r
-                JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan";
+                JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan
+                ORDER BY r.nama_ras ASC";
         return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
