@@ -103,7 +103,7 @@ td.aksi {
 .ras-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .ras-item {
@@ -113,8 +113,10 @@ td.aksi {
     font-size: 13px;
     border: 1px solid #bbdefb;
     display: flex;
+    width: fit-content;
     align-items: center;
     gap: 8px;
+    max-width: 100%;
 }
 
 .ras-name {

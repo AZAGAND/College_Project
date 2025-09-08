@@ -98,6 +98,9 @@ $groupedData = $rasObj->getGroupedData();
                                     <?php endforeach; ?>
                                 </div>
                             </td>
+                            <td>
+                                <a href="href="edit_jenis.php?id=<?= $data['jenis_nama']; ?>" class="btn btn-edit">Bruhh</a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     
