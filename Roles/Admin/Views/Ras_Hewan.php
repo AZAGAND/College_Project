@@ -37,7 +37,7 @@ if (isset($_GET['hapus'])) {
 }
 
 // Ambil data
-$dataRas = $rasObj->getall();
+// $dataRas = $rasObj->getall();
 $dataJenis = $jenisObj->getall();
 $groupedData = $rasObj->getGroupedData();
 ?>
@@ -78,9 +78,9 @@ $groupedData = $rasObj->getGroupedData();
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     $no = 1;
-                    foreach ($groupedData as $jenis => $data): ?>
+                    foreach ($groupedData as $data): ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td class="jenis-cell"><?= htmlspecialchars($data['jenis_nama']); ?></td>
@@ -89,9 +89,9 @@ $groupedData = $rasObj->getGroupedData();
                                     <?php foreach ($data['ras_list'] as $ras): ?>
                                         <div class="ras-item">
                                             <span class="ras-name"><?= htmlspecialchars($ras['nama']); ?></span>
-                                            <button class="delete-ras" 
-                                                    onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
-                                                    title="Hapus <?= htmlspecialchars($ras['nama']); ?>">
+                                            <button class="delete-ras"
+                                                onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
+                                                title="Hapus <?= htmlspecialchars($ras['nama']); ?>">
                                                 ×
                                             </button>
                                         </div>
@@ -99,11 +99,11 @@ $groupedData = $rasObj->getGroupedData();
                                 </div>
                             </td>
                             <td>
-                                <a href="href="edit_jenis.php?id=<?= $data['jenis_nama']; ?>" class="btn btn-edit">Bruhh</a>
+                                <a href="href=" edit_jenis.php?id=<?= $data['jenis_nama']; ?>" class="btn btn-edit">Bruhh</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                    
+
                     <?php if (empty($groupedData)): ?>
                         <tr>
                             <td colspan="3" style="text-align: center; padding: 40px; color: #666;">
