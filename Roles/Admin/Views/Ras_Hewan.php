@@ -37,7 +37,6 @@ if (isset($_GET['hapus'])) {
 }
 
 // Ambil data
-// $dataRas = $rasObj->getall();
 $dataJenis = $jenisObj->getall();
 $groupedData = $rasObj->getGroupedData();
 ?>
@@ -92,14 +91,14 @@ $groupedData = $rasObj->getGroupedData();
                                             <button class="delete-ras"
                                                 onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
                                                 title="Hapus <?= htmlspecialchars($ras['nama']); ?>">
-                                                ×
+                                                x
                                             </button>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
                             </td>
                             <td>
-                                <a href="href=" edit_jenis.php?id=<?= $data['jenis_nama']; ?>" class="btn btn-edit">Bruhh</a>
+                                <a href="href=" edit_jenis.php?id=<?= $data['jenis_nama']; ?>" class="btn btn-edit">Edit</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
