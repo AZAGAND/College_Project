@@ -33,7 +33,7 @@ header("Pragma: no-cache");
         <a href="Role_Management/role_management.php">⚙️ Manajemen Role</a>
         <a href="../Roles/Admin/Views/Ras_hewan.php">🐾 Menu Ras Hewan</a>
         <a href="../Roles/Admin/Views/Jenis_hewan.php">🐱 menu Jenis Hewan</a>
-        <a href="../Roles/Admin/admin.php">⬅ Back to Admin Page</a>
+        <a href="../Roles/Resepsionis/Resepsionis_Dashboard.php">Data Pemilik</a>
     </div>
 </body>
 

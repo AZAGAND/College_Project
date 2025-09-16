@@ -2,14 +2,26 @@
 require_once __DIR__ . '/../DB/dbconnection.php';
 
 class User
-{
-    private $conn;
+{   
+    protected $conn;
+    protected $iduser;
+    protected $nama;
+    protected $email;
+    protected $password;
 
     public function __construct($db)
     {
         $this->conn = $db->getConnection();
     }
 
+    public function set_data_user($nama, $email, $password) {
+        $this->nama = $nama;
+        $this->email = $email;
+        $this->password = password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    
+        
     public function getAllUsers()
     {
         $sql = "SELECT u.iduser, u.nama, u.email, r.nama_role

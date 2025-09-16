@@ -60,7 +60,6 @@ class Login {
             exit;
         }
 
-        // Kalau multi role → pilih dulu
         header("Location: ../role_management.php");
         exit;
     }
