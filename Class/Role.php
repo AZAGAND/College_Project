@@ -8,12 +8,22 @@ class role
         $this->conn = $db->getConnection();
     }
 
-    public function getallroles()
+    public function getAllUsers()
     {
-        $stmt = $this->conn->prepare("SELECT * FROM role");
+        $sql = "SELECT iduser, nama, email FROM user";
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllRoles()
+    {
+        $sql = "SELECT idrole, nama_role FROM role";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     public function getrolesbyuser($iduser)
     {
@@ -24,12 +34,23 @@ class role
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([":iduser" => $iduser]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$result) {
+            echo "<pre>DEBUG: Tidak ada role ditemukan</pre>";
+        }
+        return $result;
     }
 
-    public function addrole($nama_role)
+    public function addrole($iduser, $idrole)
     {
-        $stmt = $this->conn->prepare("INSERT INTO role (nama_role) VALUES (?)");
-        return $stmt->execute([$nama_role]);
+        $sql = "INSERT INTO role_user (iduser, idrole, status) VALUES (?, ?, 1)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$iduser, $idrole]);
+
+        if (!$result) {
+            echo "<pre>DEBUG: Tidak ada role ditemukan</pre>";
+        }
+        return $result;
     }
 
     public function updaterole($id, $nama_role)

@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../DB/dbconnection.php';
 
 class User
-{   
+{
     protected $conn;
     protected $iduser;
     protected $nama;
@@ -14,14 +14,15 @@ class User
         $this->conn = $db->getConnection();
     }
 
-    public function set_data_user($nama, $email, $password) {
+    public function set_data_user($nama, $email, $password)
+    {
         $this->nama = $nama;
         $this->email = $email;
         $this->password = password_hash($password, PASSWORD_BCRYPT);
     }
 
-    
-        
+
+
     public function getAllUsers()
     {
         $sql = "SELECT u.iduser, u.nama, u.email, r.nama_role
@@ -79,8 +80,12 @@ class User
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
 
-        return $stmt->execute();
+        if ($stmt->execute()) {
+            return $this->conn->lastInsertId(); // 🔑 kembalikan ID user
+        }
+        return false;
     }
+
 
 
     public function updateuser($id, $nama, $email)

@@ -1,45 +1,63 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../DB/dbconnection.php';
+require_once __DIR__ . '/../../Class/Owner.php';
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Resepsionis') {
+    header("Location: ../../Views/Auth/login_RSHP.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Registrasi Pemilik</title>
+    <title>Dashboard Resepsionis</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-<div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h3>Registrasi Pemilik</h3>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dashboard Resepsionis</a>
+        <div class="d-flex">
+            <span class="navbar-text me-3">Halo, <?= $_SESSION['nama'] ?? 'Resepsionis'; ?></span>
+            <a href="../../Views/Logout.php" class="btn btn-outline-light btn-sm">Logout</a>
         </div>
-        <div class="card-body">
-            <?php if (!empty($notif)): ?>
-                <div class="alert alert-info"><?= $notif ?></div>
-            <?php endif; ?>
+    </div>
+</nav>
 
-            <form method="post" action="../../Controller/Resepsionis/Resepsionis_register_process.php">
-                <div class="mb-3">
-                    <label for="nama" class="form-label">Nama Lengkap</label>
-                    <input type="text" class="form-control" name="nama" required>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Menu Registrasi -->
+        <div class="col-md-4">
+            <div class="card shadow-lg mb-3">
+                <div class="card-header bg-success text-white">Registrasi</div>
+                <div class="card-body">
+                    <a href="Feature/registrasi_form.php" class="btn btn-primary w-100 mb-2">➕ Registrasi Pemilik</a>
+                    <a href="registrasi_pet.php" class="btn btn-primary w-100">➕ Registrasi Pet</a>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" required>
+            </div>
+        </div>
+
+        <!-- Menu Temu Dokter -->
+        <div class="col-md-4">
+            <div class="card shadow-lg mb-3">
+                <div class="card-header bg-info text-white">Temu Dokter</div>
+                <div class="card-body">
+                    <a href="temu_dokter.php" class="btn btn-info w-100">🩺 Daftar Temu Dokter</a>
                 </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" required>
+            </div>
+        </div>
+
+        <!-- Menu Info / Statistik -->
+        <div class="col-md-4">
+            <div class="card shadow-lg mb-3">
+                <div class="card-header bg-warning text-dark">Informasi</div>
+                <div class="card-body">
+                    <p>Gunakan menu registrasi untuk menambahkan pemilik baru beserta pet-nya, 
+                    kemudian lakukan pendaftaran Temu Dokter sesuai kebutuhan.</p>
                 </div>
-                <div class="mb-3">
-                    <label for="no_wa" class="form-label">Nomor WhatsApp</label>
-                    <input type="text" class="form-control" name="no_wa" required>
-                </div>
-                <div class="mb-3">
-                    <label for="alamat" class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Daftar</button>
-                <a href="home_resepsionis.php" class="btn btn-secondary">Kembali</a>
-            </form>
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+require_once __DIR__ . '/../../../DB/dbconnection.php';
+require_once __DIR__ . '/../../../Class/Role.php';
+
 // Cegah akses jika belum login
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: /PHP_Native_Web_OOP-Modul4/Views/login_RSHP.php");
@@ -10,6 +14,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+
+$db = new DBConnection();
+$roleObj = new Role($db);
+
+$allUsers = $roleObj->getAllUsers();
+$allRoles = $roleObj->getAllRoles();
 
 // Ambil notif dari session
 $msg = $_SESSION['message'] ?? '';
@@ -36,18 +46,19 @@ unset($_SESSION['message']);
             <label for="iduser">Pilih User</label>
             <select name="iduser" id="iduser" required>
                 <option value="">-- Pilih User --</option>
-                <?php foreach ($users as $u): ?>
-                    <option value="<?= $u['iduser'] ?>"><?= $u['nama'] ?></option>
+                <?php foreach ($allUsers as $u): ?>
+                    <option value="<?= $u['iduser'] ?>"><?= $u['nama'] ?> (<?= $u['email'] ?>)</option>
                 <?php endforeach; ?>
             </select>
 
             <label for="idrole">Pilih Role</label>
             <select name="idrole" id="idrole" required>
                 <option value="">-- Pilih Role --</option>
-                <?php foreach ($roles as $r): ?>
+                <?php foreach ($allRoles as $r): ?>
                     <option value="<?= $r['idrole'] ?>"><?= $r['nama_role'] ?></option>
                 <?php endforeach; ?>
             </select>
+
 
             <input type="submit" value="Tambah Role">
         </form>

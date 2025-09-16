@@ -1,14 +1,17 @@
 <?php
-class Login {
+class Login
+{
     private $userObj;
     private $roleObj;
 
-    public function __construct($db) {
+    public function __construct($db)
+    {
         $this->userObj = new User($db);
         $this->roleObj = new Role($db);
     }
 
-    public function login($email, $password) {
+    public function login($email, $password)
+    {
         if (empty($email) || empty($password)) {
             return "Email dan password harus diisi!";
         }
@@ -32,33 +35,38 @@ class Login {
 
         $_SESSION['logged_in'] = true;
         $_SESSION['user'] = [
-            'id'    => $user['iduser'],
-            'nama'  => $user['nama'],
+            'id' => $user['iduser'],
+            'nama' => $user['nama'],
             'email' => $user['email'],
             'roles' => $roles
         ];
 
         // Kalau cuma 1 role → redirect langsung
+        $baseUrl = "/PHP_Native_Web_OOP-Modul4";
+
         if (count($roles) == 1) {
-            $role = $roles[0]['nama_role'];
+            $role = strtolower($roles[0]['nama_role']);
+            $_SESSION['role'] = ucfirst($role); // simpan role utama di session
+
             switch ($role) {
-                case 'Administrator':
-                    header("Location: ../../Roles/Admin/admin.php");
+                case 'administrator':
+                    header("Location: {$baseUrl}/Roles/Admin/admin.php");
                     break;
-                case 'Dokter':
-                    header("Location: ../../Roles/Dokter/dokter_dashboard.php");
+                case 'dokter':
+                    header("Location: {$baseUrl}/Roles/Dokter/dokter_dashboard.php");
                     break;
-                case 'Perawat':
-                    header("Location: ../../Roles/Perawat/perawat_dashboard.php");
+                case 'perawat':
+                    header("Location: {$baseUrl}/Roles/Perawat/perawat_dashboard.php");
                     break;
-                case 'Resepsionis':
-                    header("Location: ../../Roles/Resepsionis/resepsionis_dashboard.php");
+                case 'resepsionis':
+                    header("Location: {$baseUrl}/Roles/Resepsionis/Resepsionis_Dashboard.php");
                     break;
                 default:
                     return "Role tidak dikenali!";
             }
             exit;
         }
+
 
         header("Location: ../role_management.php");
         exit;
