@@ -37,4 +37,20 @@ class Pet
         $stmt->execute([':idpemilik' => $idpemilik]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getAllPets()
+    {
+        $sql = "SELECT p.idpet, p.nama AS nama_pet, p.tanggal_lahir, p.warna_tanda, p.jenis_kelamin,
+                    pem.nama AS nama_pemilik, pem.email, r.nama_ras, j.nama_jenis_hewan
+            FROM pet p
+            JOIN pemilik pmk ON p.idpemilik = pmk.idpemilik
+            JOIN user pem ON pmk.iduser = pem.iduser
+            JOIN ras_hewan r ON p.idras_hewan = r.idras_hewan
+            JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
+
