@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($error) {
         $_SESSION['login_error'] = $error;
-        header("Location: ../login.php");
+        header("Location: ../login_RSHP.php");
         exit;
     }
 }
