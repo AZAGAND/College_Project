@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php if (!empty($_SESSION['notif'])): ?>
     <div class="alert alert-info"><?= $_SESSION['notif']; ?></div>
-    <?php unset($_SESSION['notif']); // hapus biar gak muncul lagi setelah refresh ?>
+    <?php unset($_SESSION['notif']); ?>
 <?php endif; ?>
 
 

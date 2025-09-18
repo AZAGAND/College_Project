@@ -35,10 +35,9 @@ class Pemilik extends User
     }
 
 
-    // ✅ Override get_user_by_id: cari berdasarkan idpemilik
     public function get_user_by_id($idpemilik)
     {
-        $sql = "SELECT u.iduser, u.nama, u.email, u.password, 
+        $sql = "SELECT u.iduser, u.nama, u.email, u.password,
                         p.idpemilik, p.no_wa, p.alamat
                 FROM pemilik p
                 JOIN user u ON p.iduser = u.iduser
@@ -59,19 +58,14 @@ class Pemilik extends User
         return $data;
     }
 
-    // ✅ Getter tambahan
-    public function getIdPemilik()
+    public function getAllPemilik()
     {
-        return $this->idpemilik;
+        $sql = "SELECT p.idpemilik, u.nama, u.email, p.no_wa, p.alamat
+            FROM pemilik p
+            JOIN user u ON p.iduser = u.iduser";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getNoWa()
-    {
-        return $this->no_wa;
-    }
-
-    public function getAlamat()
-    {
-        return $this->alamat;
-    }
 }

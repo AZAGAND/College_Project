@@ -7,6 +7,11 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Resepsionis') {
     header("Location: ../../Views/Auth/login_RSHP.php");
     exit;
 }
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
