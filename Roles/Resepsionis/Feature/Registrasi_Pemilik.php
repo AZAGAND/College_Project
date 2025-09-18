@@ -4,8 +4,6 @@
     <?php unset($_SESSION['notif']); ?>
 <?php endif; ?>
 
-
-
 <!DOCTYPE html>
 <html lang="id">
 

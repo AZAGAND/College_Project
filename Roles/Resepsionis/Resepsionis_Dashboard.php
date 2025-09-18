@@ -38,8 +38,8 @@ header("Pragma: no-cache");
             <div class="card shadow-lg mb-3">
                 <div class="card-header bg-success text-white">Registrasi</div>
                 <div class="card-body">
-                    <a href="Feature/registrasi_form.php" class="btn btn-primary w-100 mb-2">➕ Registrasi Pemilik</a>
-                    <a href="registrasi_pet.php" class="btn btn-primary w-100">➕ Registrasi Pet</a>
+                    <a href="Feature/registrasi_Pemilik.php" class="btn btn-primary w-100 mb-2">➕ Registrasi Pemilik</a>
+                    <a href="Feature/registrasi_pet.php" class="btn btn-primary w-100">➕ Registrasi Pet</a>
                 </div>
             </div>
         </div>

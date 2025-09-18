@@ -19,11 +19,11 @@ $allPemilik = $pemilikObj->getAllPemilik();
 <div class="container mt-5">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
-            <h3>Data Pemilik</h3>
+            <h3 class="mb-0">Data Pemilik</h3>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-striped">
-                <thead>
+                <thead class="table-dark">
                     <tr>
                         <th>ID Pemilik</th>
                         <th>Nama</th>
@@ -44,6 +44,11 @@ $allPemilik = $pemilikObj->getAllPemilik();
                     <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <!-- Tombol kembali di bawah tabel -->
+            <div class="mt-3">
+                <a href="../../../Data_master/Data_Master.php" class="btn btn-secondary">⬅ Kembali ke Dashboard</a>
+            </div>
         </div>
     </div>
 </div>
