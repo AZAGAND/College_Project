@@ -68,3 +68,60 @@ h2 {
 .menu a:hover {
     background: #2980b9;
 }
+
+/* Navbar atas */
+.top-nav {
+    background: linear-gradient(to right, #004080 50%, #FFD700 80%);
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.top-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.top-nav a:hover {
+    color: yellow;
+}
+
+/* Wrapper layout */
+.wrapper {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: #3498db;
+    min-height: 100vh; /* full height */
+    display: flex;
+    flex-direction: column;
+    padding: 20px 10px;
+}
+
+.sidebar a {
+    background: #2980b9;
+    color: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #1f6391;
+}
+
+/* Konten utama */
+.content {
+    flex: 1;
+    padding: 20px;
+    background: #f9f9f9;
+}

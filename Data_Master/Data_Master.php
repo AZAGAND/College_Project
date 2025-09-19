@@ -11,33 +11,44 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+$base_url = "http://localhost/PHP_Native_Web_OOP-Modul4/";
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../CSS/Data_Master.css" rel="stylesheet">
     <title>Data Master</title>
 </head>
-
 <body>
-    <?php
-    include("../Navigation/menu.php");
-    ?>
+    <!-- Navbar -->
+    <nav class="top-nav">
+        <a href="<?= $base_url ?>Roles/Admin/admin.php">Home</a>
+        <a href="<?= $base_url ?>Data_Master/Data_Master.php">Data Master</a>
+        <a href="<?= $base_url ?>Views/Logout.php">Logout</a>
+    </nav>
 
-    <div class="menu-container menu">
-        <a href="Data_User/Data_User.php">👤 Data User</a>
-        <a href="Role_Management/role_management.php">⚙️ Manajemen Role</a>
-        <a href="../Roles/Admin/Views/Ras_hewan.php">🐾 Menu Ras Hewan</a>
-        <a href="../Roles/Admin/Views/Jenis_hewan.php">🐱 menu Jenis Hewan</a>
-        <a href="../Roles/Admin/Views/Data_pemilik.php">📋 Data Pemilik</a>
-        <a href="../Roles/Admin/Views/Data_pet.php">🐶 Data Hewan</a>
-        <a href="../Roles/Admin/Views/Data_Kategori.php">Data Kategori</a>
-        <a href="../Roles/Admin/Views/Data_Kategori_Klinis.php">Data Kategori Klinis</a>
+    <!-- Wrapper untuk sidebar + content -->
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="Data_User/Data_User.php">👤 Data User</a>
+            <a href="Role_Management/role_management.php">⚙️ Manajemen Role</a>
+            <a href="../Roles/Admin/Views/Ras_hewan.php">🐾 Menu Ras Hewan</a>
+            <a href="../Roles/Admin/Views/Jenis_hewan.php">🐱 Menu Jenis Hewan</a>
+            <a href="../Roles/Admin/Views/Data_pemilik.php">📋 Data Pemilik</a>
+            <a href="../Roles/Admin/Views/Data_pet.php">🐶 Data Hewan</a>
+            <a href="../Roles/Admin/Views/Data_Kategori.php">📋 Data Kategori</a>
+            <a href="../Roles/Admin/Views/Data_Kategori_Klinis.php">🩺 Data Kategori Klinis</a>
+            <a href="../Roles/Admin/Views/Data_Kode_Tindakan.php">💉 Data Kode Tindakan Terapi</a>
+        </aside>
+
+        <!-- Konten -->
+        <main class="content">
+            <h2>Selamat Datang di Data Master</h2>
+            <p>Pilih menu di samping untuk mengelola data.</p>
+        </main>
     </div>
 </body>
-
 </html>
