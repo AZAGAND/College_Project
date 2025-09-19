@@ -35,7 +35,7 @@ header("Pragma: no-cache");
         <a href="../Roles/Admin/Views/Jenis_hewan.php">🐱 menu Jenis Hewan</a>
         <a href="../Roles/Admin/Views/Data_pemilik.php">📋 Data Pemilik</a>
         <a href="../Roles/Admin/Views/Data_pet.php">🐶 Data Hewan</a>
-        <a href="../Roles/Admin/Views/Data_pet.php">Data Hewan</a>
+        <a href="../Roles/Admin/Views/Data_Kategori.php">Data Kategori</a>
     </div>
 </body>
 
