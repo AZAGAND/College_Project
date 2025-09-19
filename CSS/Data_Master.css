@@ -115,6 +115,7 @@ h2 {
     transition: 0.3s;
 }
 
+
 .sidebar a:hover {
     background: #1f6391;
 }
@@ -124,4 +125,5 @@ h2 {
     flex: 1;
     padding: 20px;
     background: #f9f9f9;
+    text-align: center;
 }

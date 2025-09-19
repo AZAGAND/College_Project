@@ -11,25 +11,24 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-$base_url = "http://localhost/PHP_Native_Web_OOP-Modul4/";
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="../CSS/Data_Master.css" rel="stylesheet">
     <title>Data Master</title>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="top-nav">
-        <a href="<?= $base_url ?>Roles/Admin/admin.php">Home</a>
-        <a href="<?= $base_url ?>Data_Master/Data_Master.php">Data Master</a>
-        <a href="<?= $base_url ?>Views/Logout.php">Logout</a>
-    </nav>
 
-    <!-- Wrapper untuk sidebar + content -->
+<body>
+    <?php
+    include("../Navigation/menu.php");
+    ?>
+
+    
     <div class="wrapper">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -44,11 +43,11 @@ $base_url = "http://localhost/PHP_Native_Web_OOP-Modul4/";
             <a href="../Roles/Admin/Views/Data_Kode_Tindakan.php">💉 Data Kode Tindakan Terapi</a>
         </aside>
 
-        <!-- Konten -->
+        <!-- Konten utama -->
         <main class="content">
             <h2>Selamat Datang di Data Master</h2>
-            <p>Pilih menu di samping untuk mengelola data.</p>
-        </main>
-    </div>
-</body>
-</html>
+            <p>Pilih menu di sidebar kiri untuk mengelola data.</p>
+        </main>>
+</body >
+
+</html >
