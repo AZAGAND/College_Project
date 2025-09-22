@@ -49,7 +49,7 @@ header("Pragma: no-cache");
             <div class="card shadow-lg mb-3">
                 <div class="card-header bg-info text-white">Temu Dokter</div>
                 <div class="card-body">
-                    <a href="temu_dokter.php" class="btn btn-info w-100">🩺 Daftar Temu Dokter</a>
+                    <a href="Feature/temu_dokter.php" class="btn btn-info w-100">🩺 Daftar Temu Dokter</a>
                 </div>
             </div>
         </div>
