@@ -56,7 +56,7 @@ if (!$allowed) {
                 <div class="card-icon">📋</div>
                 <h5 class="card-title">Rekam Medis</h5>
                 <p class="card-text">Kelola rekam medis pasien dan detail tindakan terapi.</p>
-                <a href="RekamMedis.php" class="btn btn-primary">Buka</a>
+                <a href="Feature/Rekam_Medis.php" class="btn btn-primary">Buka</a>
             </div>
         </div>
 

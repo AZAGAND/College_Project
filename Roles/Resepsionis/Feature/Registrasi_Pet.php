@@ -1,8 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../../DB/dbconnection.php';
-require_once __DIR__ . '/../../../Class/Owner.php'; // kalau filenya Owner.php, ganti sesuai
-
+require_once __DIR__ . '/../../../Class/Owner.php';
 $db = new DBConnection();
 $conn = $db->getConnection();
 

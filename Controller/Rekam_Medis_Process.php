@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../DB/dbconnection.php';
 require_once __DIR__ . '/../Class/RekamMedis.php';
-require_once __DIR__ . '/../Class/RekamMedisDetail.php';
+require_once __DIR__ . '/../Class/Rekam_Medis_Detail.php';
 
 $db = new DBConnection();
 $rekamObj = new RekamMedis($db);

@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../DB/dbconnection.php';
-require_once __DIR__ . '/../../Class/RekamMedis.php';
-require_once __DIR__ . '/../../Class/RekamMedisDetail.php';
+require_once __DIR__ . '/../../../DB/dbconnection.php';
+require_once __DIR__ . '/../../../Class/Rekam_Medis.php';
+require_once __DIR__ . '/../../../Class/Detail_Rekam_Medis.php';
 
 $db = new DBConnection();
 $rekamObj = new RekamMedis($db);
@@ -27,7 +27,7 @@ unset($_SESSION['msg']);
     <?php endif; ?>
 
     <!-- Tambah Rekam Medis -->
-    <form method="post" action="../../Controller/RekamMedis_Process.php" class="mb-4">
+    <form method="post" action="../../Controller/Rekam_Medis_Process.php" class="mb-4">
         <input type="hidden" name="action" value="create">
         <div class="row">
             <div class="col-md-3">
