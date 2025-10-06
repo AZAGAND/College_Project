@@ -11,19 +11,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         if ($action === 'create') {
+            $idpemilik = $_POST['idpemilik'];
             $idpet    = $_POST['idpet'];
             $iddokter = $_POST['iddokter'];
-            $keluhan  = $_POST['keluhan'];
+            
 
-            $temuObj->create($idpet, $iddokter);
+            $temuObj->create($idpemilik, $idpet, $iddokter);
             $_SESSION['msg'] = "✅ Temu dokter berhasil ditambahkan!";
         }
         elseif ($action === 'update') {
+            $idpemilik = $_POST['idpemilik'];
             $no_temu  = $_POST['no_temu'];
             $iddokter = $_POST['iddokter'];
-            $keluhan  = $_POST['keluhan'];
+            
 
-            $temuObj->update($no_temu, $keluhan, $iddokter);
+            $temuObj->update($no_temu, $iddokter);
             $_SESSION['msg'] = "✏️ Data temu dokter berhasil diperbarui!";
         }
         elseif ($action === 'delete') {
