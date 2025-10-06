@@ -4,7 +4,10 @@ require_once(__DIR__ . '/../../../Class/Reservasi.php');
 
 $db = (new DBconnection())->getConnection();
 $reservasi = new Reservasi($db);
+
 $data = $reservasi->getAll();
+$hewan = $reservasi->getAllHewan();
+$dokter = $reservasi->getAllDokter();
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -23,36 +26,6 @@ $data = $reservasi->getAll();
             <div class="card-header bg-primary text-white">
                 <h4 class="mb-0"><i class="bi bi-calendar-check"></i> Daftar Reservasi Dokter</h4>
             </div>
-            <div class="card-body">
-
-                <!-- FORM TAMBAH -->
-                <form action="../../../Controller/Reservasi_Process.php" method="POST" class="row g-3 mb-4">
-                    <div class="col-md-5">
-                        <label class="form-label fw-semibold">Nama Hewan</label>
-                        <select name="idpet" class="form-select" required>
-                            <option value="">-- Pilih Hewan --</option>
-                            <?php while ($h = $hewan->fetch_assoc()): ?>
-                                <option value="<?= $h['idpet'] ?>"><?= htmlspecialchars($h['nama']) ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-5">
-                        <label class="form-label fw-semibold">Dokter Pemeriksa</label>
-                        <select name="idrole_user" class="form-select" required>
-                            <option value="">-- Pilih Dokter --</option>
-                            <?php while ($d = $dokter->fetch_assoc()): ?>
-                                <option value="<?= $d['idrole_user'] ?>"><?= htmlspecialchars($d['nama']) ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
-                    <div class="col-md-2 d-flex align-items-end">
-                        <button type="submit" name="create" class="btn btn-success w-100">
-                            <i class="bi bi-plus-lg"></i> Tambah
-                        </button>
-                    </div>
-                </form>
 
                 <!-- TABEL -->
                 <div class="table-responsive">
@@ -69,10 +42,9 @@ $data = $reservasi->getAll();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            if ($data && $data->num_rows > 0) {
-                                $no = 1;
-                                while ($row = $data->fetch_assoc()) { ?>
+                            <?php if (!empty($data)): ?>
+                                <?php $no = 1;
+                                foreach ($data as $row): ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
                                         <td><span class="badge bg-secondary"><?= htmlspecialchars($row['no_temu']) ?></span>
@@ -93,13 +65,15 @@ $data = $reservasi->getAll();
                                         </td>
                                         <td><?= htmlspecialchars($row['tanggal']) ?></td>
                                         <td>
-                                            <form method="POST" action="../../../Controller/Reservasi_Process.php"
+                                            <form method="POST" action="/PHP_Native_Web_OOP-Modul4/Controller/Reservasi_Process.php""
                                                 class="d-inline">
                                                 <input type="hidden" name="idreservasi_dokter"
                                                     value="<?= $row['idreservasi_dokter'] ?>">
                                                 <select name="status" class="form-select form-select-sm d-inline w-auto">
-                                                    <option value="P" <?= $row['status'] == 'P' ? 'selected' : '' ?>>Pending</option>
-                                                    <option value="S" <?= $row['status'] == 'S' ? 'selected' : '' ?>>Selesai</option>
+                                                    <option value="P" <?= $row['status'] == 'P' ? 'selected' : '' ?>>Pending
+                                                    </option>
+                                                    <option value="S" <?= $row['status'] == 'S' ? 'selected' : '' ?>>Selesai
+                                                    </option>
                                                     <option value="D" <?= $row['status'] == 'D' ? 'selected' : '' ?>>Dibatalkan
                                                     </option>
                                                 </select>
@@ -108,7 +82,7 @@ $data = $reservasi->getAll();
                                                 </button>
                                             </form>
 
-                                            <form method="POST" action="../../../Controller/Reservasi_Process.php"
+                                            <form method="POST" action="/PHP_Native_Web_OOP-Modul4/Controller/Reservasi_Process.php"
                                                 class="d-inline">
                                                 <input type="hidden" name="idreservasi_dokter"
                                                     value="<?= $row['idreservasi_dokter'] ?>">
@@ -119,13 +93,14 @@ $data = $reservasi->getAll();
                                             </form>
                                         </td>
                                     </tr>
-                                <?php }
-                            } else { ?>
+                                <?php endforeach; ?>
+                            <?php else: ?>
                                 <tr>
                                     <td colspan="7" class="text-muted">Belum ada data reservasi.</td>
                                 </tr>
-                            <?php } ?>
+                            <?php endif; ?>
                         </tbody>
+
                     </table>
                 </div>
 
