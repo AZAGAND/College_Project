@@ -105,6 +105,7 @@ $dokter = $reservasi->getAllDokter();
                 </div>
 
             </div>
+                <a href="../Perawat_Dashboard.php" class="btn btn-secondary mt-3">⬅ Kembali</a>
         </div>
     </div>
 
