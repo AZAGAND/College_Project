@@ -39,15 +39,16 @@ class TemuDokter
     {
         $no_temu = $this->generateNoTemu();
 
-        $sql = "INSERT INTO temu_dokter (no_temu, idpet, iddokter, tanggal) 
-            VALUES (:no_temu, :idpet, :iddokter, NOW())";
+        $sql = "INSERT INTO temu_dokter (no_temu, idpet, idrole_user, tanggal) 
+            VALUES (:no_temu, :idpet, :idrole_user, NOW())";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':no_temu' => $no_temu,
             ':idpet' => $idpet,
-            ':iddokter' => $iddokter
+            ':idrole_user' => $iddokter
         ]);
     }
+
 
 
     // 🔹 READ ALL
@@ -55,7 +56,7 @@ class TemuDokter
     public function getAll()
     {
         $sql = "SELECT td.no_temu,
-                    td.tanggal,     
+                    td.tanggal,
                     p.nama AS nama_pet,
                     jh.nama_jenis_hewan AS jenis_hewan,
                     u.nama AS nama_pemilik,

@@ -31,44 +31,49 @@ unset($_SESSION['msg']);
             <div class="alert alert-info"><?= $msg ?></div>
         <?php endif; ?>
 
-        <div class="mb-3">
-            <label class="form-label">Nama Pemilik</label>
-            <select name="idpemilik" id="idpemilik" class="form-select" required>
-                <option value="">-- Pilih Pemilik --</option>
-                <?php foreach ($pemilikList as $p): ?>
-                    <option value="<?= $p['idpemilik'] ?>">
-                        <?= htmlspecialchars($p['nama_pemilik']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+        <form method="POST" action="../../../Controller/Temu_Dokter_Process.php" class="card p-3 mb-4 shadow-sm">
+            <input type="hidden" name="action" value="create">
 
-        <!-- Dropdown Pet -->
-        <div class="mb-3">
-            <label class="form-label">Nama Pet</label>
-            <select name="idpet" class="form-select" required>
-                <option value="">-- Pilih Pet (Pemilik) --</option>
-                <?php foreach ($allPetList as $pet): ?>
-                    <option value="<?= $pet['idpet'] ?>">
-                        <?= htmlspecialchars($pet['nama_pemilik']) ?> - <?= htmlspecialchars($pet['nama_pet']) ?>
-                        (<?= htmlspecialchars($pet['jenis_hewan']) ?>)
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Nama Pemilik</label>
+                <select name="idpemilik" id="idpemilik" class="form-select" required>
+                    <option value="">-- Pilih Pemilik --</option>
+                    <?php foreach ($pemilikList as $p): ?>
+                        <option value="<?= $p['idpemilik'] ?>">
+                            <?= htmlspecialchars($p['nama_pemilik']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <div class="mb-3">
-            <label class="form-label">Dokter</label>
-            <select name="iddokter" class="form-select" required>
-                <option value="">-- Pilih Dokter --</option>
-                <?php foreach ($dokterList as $d): ?>
-                    <option value="<?= $d['idrole_user'] ?>">
-                        <?= htmlspecialchars($d['nama_dokter']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit" class="btn btn-success">Tambah</button>
-        </div>
+            <div class="mb-3">
+                <label class="form-label">Nama Pet</label>
+                <select name="idpet" class="form-select" required>
+                    <option value="">-- Pilih Pet (Pemilik) --</option>
+                    <?php foreach ($allPetList as $pet): ?>
+                        <option value="<?= $pet['idpet'] ?>">
+                            <?= htmlspecialchars($pet['nama_pemilik']) ?> - <?= htmlspecialchars($pet['nama_pet']) ?>
+                            (<?= htmlspecialchars($pet['jenis_hewan']) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dokter</label>
+                <select name="iddokter" class="form-select" required>
+                    <option value="">-- Pilih Dokter --</option>
+                    <?php foreach ($Listdokter as $d): ?>
+                        <option value="<?= $d['idrole_user'] ?>">
+                            <?= htmlspecialchars($d['nama_dokter']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Tambah</button>
+        </form>
+
 
 
         <!-- Tabel Data -->
@@ -95,7 +100,7 @@ unset($_SESSION['msg']);
                                 <tr>
                                     <td><?= $no++ ?></td>
                                     <td><?= $row['no_temu'] ?></td>
-                                    <td><?= $row['created_at'] ?></td>
+                                    <td><?= date('d M Y, H:i', strtotime($row['tanggal'])) ?></td>
                                     <td><?= $row['nama_pet'] ?></td>
                                     <td><?= $row['jenis_hewan'] ?></td>
                                     <td><?= $row['nama_pemilik'] ?></td>
@@ -107,7 +112,7 @@ unset($_SESSION['msg']);
                                             <input type="hidden" name="action" value="update">
                                             <input type="hidden" name="no_temu" value="<?= $row['no_temu'] ?>">
                                             <input type="hidden" name="iddokter" value="<?= $row['iddokter'] ?? '' ?>">
-                                            <input type="hidden" name="keluhan" value="<?= $row['keluhan'] ?>">
+                                            <!-- <input type="hidden" name="keluhan" value="<?= $row['keluhan'] ?>"> -->
                                             <button class="btn btn-warning btn-sm">✏️ Edit</button>
                                         </form>
 

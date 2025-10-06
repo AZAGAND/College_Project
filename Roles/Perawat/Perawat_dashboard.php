@@ -66,7 +66,7 @@ if (!$allowed) {
                 <div class="card-icon">📅</div>
                 <h5 class="card-title">Data Reservasi</h5>
                 <p class="card-text">Lihat data reservasi pasien untuk proses rekam medis.</p>
-                <a href="Reservasi.php" class="btn btn-primary">Buka</a>
+                <a href="Feature/Reservasi.php" class="btn btn-primary">Buka</a>
             </div>
         </div>
 
