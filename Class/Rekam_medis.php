@@ -98,10 +98,22 @@ class RekamMedis
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function delete($idrekam_medis)
+    public function update($idrekam_medis, $diagnosa, $anamnesa, $temuan_klinis)
     {
-        $sql = "DELETE FROM rekam_medis WHERE idrekam_medis = :id";
+        $sql = "UPDATE rekam_medis 
+            SET diagnosa = :diagnosa, 
+                anamnesa = :anamnesa, 
+                temuan_klinis = :temuan_klinis
+            WHERE idrekam_medis = :idrekam_medis";
+
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute(['id' => $idrekam_medis]);
+        $stmt->bindParam(':diagnosa', $diagnosa, PDO::PARAM_STR);
+        $stmt->bindParam(':anamnesa', $anamnesa, PDO::PARAM_STR);
+        $stmt->bindParam(':temuan_klinis', $temuan_klinis, PDO::PARAM_STR);
+        $stmt->bindParam(':idrekam_medis', $idrekam_medis, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
     }
 }

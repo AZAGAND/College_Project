@@ -17,7 +17,8 @@ $allRekam = $rekamObj->getAll();
 $msg = $_SESSION['msg'] ?? '';
 unset($_SESSION['msg']);
 
-function esc($val) {
+function esc($val)
+{
     return htmlspecialchars($val ?? '', ENT_QUOTES, 'UTF-8');
 }
 
@@ -161,12 +162,17 @@ function esc($val) {
                                 <td class="px-4 py-4 text-gray-700"><?= esc($row['temuan_klinis']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_dokter']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['tanggal']); ?></td>
-                                <td class="px-4 py-4">
+                                <td class="px-4 py-4 flex gap-2">
+                                    <a href="Edit_Rekam_Medis.php?idrekam_medis=<?= $row['idrekam_medis']; ?>"
+                                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-semibold px-3 py-2 rounded-lg">
+                                        ✏️ Edit
+                                    </a>
                                     <a href="Detail_Rekam_Medis.php?idrekam_medis=<?= $row['idrekam_medis']; ?>"
-                                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
-                                        🔍 Lihat Detail
+                                        class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-3 py-2 rounded-lg">
+                                        🔍 Detail
                                     </a>
                                 </td>
+
 
                                 <input type="hidden" name="idrekam_medis" value="<?= $row['idrekam_medis']; ?>">
                             </tr>

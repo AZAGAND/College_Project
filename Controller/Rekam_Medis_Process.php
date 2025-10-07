@@ -15,6 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($action === 'create') {
             $rekamObj->create($_POST['idreservasi'], $_POST['diagnosa'], $_POST['catatan'], $_POST['temuan_klinis']);
             $_SESSION['msg'] = "✅ Rekam medis berhasil ditambahkan.";
+        } elseif ($action === 'update') {
+            $rekamObj->update(
+                $_POST['idrekam_medis'],
+                $_POST['diagnosa'],
+                $_POST['anamnesa'],
+                $_POST['temuan_klinis']
+            );
+            $_SESSION['msg'] = "✅ Rekam medis berhasil diperbarui.";
         }
     } catch (Exception $e) {
         $_SESSION['msg'] = "❌ Error: " . $e->getMessage();
