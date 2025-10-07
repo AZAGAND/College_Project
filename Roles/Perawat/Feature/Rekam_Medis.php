@@ -27,26 +27,31 @@ unset($_SESSION['msg']);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-gray-50">
     <!-- Navigasi -->
     <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-4 py-4 flex items-center">
-            <div class="flex-1 flex justify-center items-center">
-                <a href="../Perawat_Dashboard.php" class="relative font-medium pb-1 group inline-block">
-                    Home
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Brand / Nama -->
+            <div class="flex items-center gap-2">
+                <span class="text-xl">👩‍⚕️</span>
+                <span class="font-bold text-lg">Menu Rekam Medis Perawat</span>
+            </div>
+
+            <!-- User Info & Logout -->
+            <div class="flex items-center gap-4">
+                <span class="text-blue-100">Halo, <span
+                        class="font-semibold"><?= $_SESSION['nama'] ?? 'Perawat'; ?></span></span>
+                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                    Logout
                     <span
-                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </div>
-            <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block ml-auto">
-                Logout
-                <span
-                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
-            </a>
         </div>
     </nav>
 
-    <div class="container mx-auto px-4 py-8 flex-grow">
+    <!-- Konten Utama -->
+    <main class="flex-grow container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="mb-8">
             <h2 class="text-3xl font-bold text-blue-900 mb-2">📋 Manajemen Rekam Medis</h2>
@@ -130,18 +135,17 @@ unset($_SESSION['msg']);
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-4 py-4 text-gray-900 font-medium"><?= $no++; ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['idreservasi']); ?> -
-                                    <?= htmlspecialchars($row['no_temu']); ?></td>
+                                    <?= htmlspecialchars($row['no_temu']); ?>
+                                </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pemilik']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pet']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['diagnosa']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['catatan']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['tanggal']); ?></td>
-
                                 <input type="hidden" name="idrekam_medis" value="<?= $row['idrekam_medis']; ?>">
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-
                 </table>
             </div>
         </div>
@@ -153,7 +157,7 @@ unset($_SESSION['msg']);
                 ⬅ Kembali ke Dashboard
             </a>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">

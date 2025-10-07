@@ -12,69 +12,153 @@ unset($_SESSION['msg']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Kategori</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h3>Data Kategori</h3>
-        </div>
-        <div class="card-body">
-            <?php if ($msg): ?>
-                <div class="alert alert-info"><?= $msg ?></div>
-            <?php endif; ?>
 
-            <!-- Form Tambah Kategori -->
-            <form method="post" action="../../../Controller/Kategori_Process.php" class="mb-4">
+<body class="flex flex-col min-h-screen bg-gray-50">
+    <!-- Navigasi -->
+    <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Brand / Nama -->
+            <div class="flex items-center gap-2">
+                <span class="text-xl">📂</span>
+                <span class="font-bold text-lg">Data Kategori</span>
+            </div>
+
+            <!-- User Info & Logout -->
+            <div class="flex items-center gap-4">
+                <span class="text-blue-100">Halo, <span
+                        class="font-semibold"><?= $_SESSION['nama'] ?? 'Admin'; ?></span></span>
+                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                    Logout
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Konten Utama -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-blue-900 mb-2">📂 Data Kategori</h2>
+            <p class="text-gray-600">Kelola kategori produk atau layanan</p>
+        </div>
+
+        <!-- Alert Message -->
+        <?php if ($msg): ?>
+            <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-lg shadow">
+                <p class="font-medium"><?= htmlspecialchars($msg) ?></p>
+            </div>
+        <?php endif; ?>
+
+        <!-- Form Tambah Kategori -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <h3 class="text-xl font-semibold text-blue-900 mb-4">➕ Tambah Kategori Baru</h3>
+            <form method="post" action="../../../Controller/Kategori_Process.php" class="flex flex-col md:flex-row gap-4">
                 <input type="hidden" name="action" value="create">
-                <div class="input-group">
-                    <input type="text" name="nama_kategori" class="form-control" placeholder="Nama kategori baru" required>
-                    <button type="submit" class="btn btn-success">Tambah</button>
-                </div>
+                <input type="text" 
+                       name="nama_kategori" 
+                       class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                       placeholder="Nama kategori baru"
+                       required>
+                <button type="submit" 
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300 whitespace-nowrap">
+                    ➕ Tambah
+                </button>
             </form>
-
-            <!-- Tabel Kategori -->
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nama Kategori</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($allKategori as $kat): ?>
-                        <tr>
-                            <td><?= $kat['idkategori'] ?></td>
-                            <td><?= $kat['nama_kategori'] ?></td>
-                            <td>
-                                <!-- Update (inline form) -->
-                                <form method="post" action="../../../Controller/Kategori_Process.php" class="d-inline">
-                                    <input type="hidden" name="action" value="update">
-                                    <input type="hidden" name="idkategori" value="<?= $kat['idkategori'] ?>">
-                                    <input type="text" name="nama_kategori" value="<?= $kat['nama_kategori'] ?>" required>
-                                    <button type="submit" class="btn btn-warning btn-sm">Update</button>
-                                </form>
-
-                                <!-- Delete -->
-                                <form method="post" action="../../../Controller/Kategori_Process.php" class="d-inline" onsubmit="return confirm('Yakin hapus kategori ini?')">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="idkategori" value="<?= $kat['idkategori'] ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-
-            <a href="../../../Data_master/Data_Master.php" class="btn btn-secondary mt-3">⬅ Kembali</a>
         </div>
-    </div>
-</div>
+
+        <!-- Card Tabel -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-blue-900 text-white">
+                        <tr>
+                            <th class="px-4 py-3 text-center font-semibold w-24">ID</th>
+                            <th class="px-4 py-3 text-center font-semibold">Nama Kategori</th>
+                            <th class="px-4 py-3 text-center font-semibold">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <?php if (!empty($allKategori)): ?>
+                            <?php foreach ($allKategori as $kat): ?>
+                                <tr class="hover:bg-gray-50 transition-colors">
+                                    <td class="px-4 py-4 text-center text-gray-900 font-medium">
+                                        <?= htmlspecialchars($kat['idkategori']) ?>
+                                    </td>
+                                    <td class="px-4 py-4 text-center">
+                                        <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold">
+                                            <?= htmlspecialchars($kat['nama_kategori']) ?>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex items-center justify-center gap-2 flex-wrap">
+                                            <!-- Form Update -->
+                                            <form method="post" action="../../../Controller/Kategori_Process.php" class="flex items-center gap-2">
+                                                <input type="hidden" name="action" value="update">
+                                                <input type="hidden" name="idkategori" value="<?= $kat['idkategori'] ?>">
+                                                <input type="text" 
+                                                       name="nama_kategori" 
+                                                       value="<?= htmlspecialchars($kat['nama_kategori']) ?>" 
+                                                       class="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                                       required>
+                                                <button type="submit" 
+                                                        class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                                                    ✏️ Update
+                                                </button>
+                                            </form>
+
+                                            <!-- Form Delete -->
+                                            <form method="post" action="../../../Controller/Kategori_Process.php" onsubmit="return confirm('Yakin hapus kategori ini?')">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="idkategori" value="<?= $kat['idkategori'] ?>">
+                                                <button type="submit" 
+                                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
+                                                    🗑️ Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="3" class="px-4 py-12 text-center text-gray-500">
+                                    <div class="flex flex-col items-center justify-center">
+                                        <div class="text-5xl mb-3">📂</div>
+                                        <p class="text-lg font-medium">Belum ada data kategori</p>
+                                        <p class="text-sm">Silakan tambahkan kategori baru</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tombol Kembali -->
+        <div class="mt-6">
+            <a href="../../../Data_master/Data_Master.php"
+                class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+                ⬅ Kembali ke Data Master
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
+        <div class="container mx-auto text-center">
+            <p class="text-blue-200">&copy; 2024 RSHP Universitas Airlangga. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
+
 </html>

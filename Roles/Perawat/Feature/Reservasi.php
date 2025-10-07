@@ -19,28 +19,35 @@ $dokter = $reservasi->getAllDokter();
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50 flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-gray-50">
     <!-- Navigasi -->
     <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto px-4 py-4 flex items-center">
-            <div class="flex-1 flex justify-center items-center">
-                <a href="../Perawat_Dashboard.php" class="relative font-medium pb-1 group inline-block">
-                    Home
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Brand / Nama -->
+            <div class="flex items-center gap-2">
+                <span class="text-xl">📅</span>
+                <span class="font-bold text-lg">Menu Reservasi Dokter (Perawat)</span>
+            </div>
+
+            <!-- User Info & Logout -->
+            <div class="flex items-center gap-4">
+                <span class="text-blue-100">Halo, <span
+                        class="font-semibold"><?= $_SESSION['nama'] ?? 'Perawat'; ?></span></span>
+                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                    Logout
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </div>
-            <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block ml-auto">
-                Logout
-                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
-            </a>
         </div>
     </nav>
 
-    <div class="container mx-auto px-4 py-8 flex-grow">
+    <!-- Konten Utama -->
+    <main class="flex-grow container mx-auto px-4 py-8">
         <!-- Header -->
         <div class="mb-8">
-            <h2 class="text-3xl font-bold text-blue-900 mb-2">📅 Daftar Reservasi Dokter</h2>
-            <p class="text-gray-600">Kelola dan update status reservasi pasien</p>
+            <h2 class="text-3xl font-bold text-blue-900 mb-2">📋 Daftar Reservasi Dokter</h2>
+            <p class="text-gray-600">Kelola dan update status reservasi pasien dengan mudah</p>
         </div>
 
         <!-- Card Tabel -->
@@ -139,11 +146,12 @@ $dokter = $reservasi->getAllDokter();
 
         <!-- Tombol Kembali -->
         <div class="mt-6">
-            <a href="../Perawat_Dashboard.php" class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+            <a href="../Perawat_Dashboard.php"
+                class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
                 ⬅ Kembali ke Dashboard
             </a>
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
