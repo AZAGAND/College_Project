@@ -131,21 +131,33 @@ class Pemilik extends User
 
 
     // 🔹 Ambil semua rekam medis berdasarkan pemilik login
-    public function getRekamMedisByPemilik($iduser)
-    {
-        $idpemilik = $this->getIdPemilikByUser($iduser);
-        if (!$idpemilik)
-            return [];
+    public function getMyRekamMedis($iduser)
+{
+    $idpemilik = $this->getIdPemilikByUser($iduser);
+    if (!$idpemilik) return [];
 
-        $sql = "SELECT rm.idrekam_medis, p.nama AS nama_pet, d.nama_dokter, 
-                        rm.diagnosa, rm.created_at
-                FROM rekam_medis rm
-                JOIN pet p ON rm.idpet = p.idpet
-                JOIN dokter d ON rm.iddokter = d.iddokter
-                WHERE p.idpemilik = :idpemilik
-                ORDER BY rm.created_at DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':idpemilik' => $idpemilik]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $sql = "SELECT
+                rm.idrekam_medis,
+                rm.diagnosa,
+                rm.anamnesa,
+                rm.temuan_klinis,
+                rm.created_at AS tanggal,
+                p.nama AS nama_pet,
+                j.nama_jenis_hewan AS jenis_hewan,
+                d.nama AS nama_dokter
+            FROM rekam_medis rm
+            JOIN temu_dokter td ON rm.idreservasi_dokter = td.idreservasi_dokter
+            JOIN pet p ON td.idpet = p.idpet
+            JOIN ras_hewan r ON p.idras_hewan = r.idras_hewan
+            JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan
+            JOIN role_user ru ON td.idrole_user = ru.idrole_user
+            JOIN user d ON ru.iduser = d.iduser
+            WHERE p.idpemilik = :idpemilik
+            ORDER BY rm.created_at DESC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':idpemilik' => $idpemilik]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

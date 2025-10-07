@@ -1,22 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../../DB/dbconnection.php';
-require_once __DIR__ . '/../../../Class/owner.php';
+require_once __DIR__ . '/../../../Controller/Pemilik_Controller.php';
 
-$db = new DBConnection();
-$pemilikObj = new Pemilik($db);
-
-// pastikan user login
-$iduser = $_SESSION['iduser'] ?? null;
-$namauser = $_SESSION['nama'] ?? 'Pemilik';
-
-if (!$iduser) {
-    header("Location: ../../../Views/login_RSHP.php");
+if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Pemilik') {
+    header("Location: ../../Views/login_RSHP.php");
     exit;
 }
 
-// ambil pet milik user yg login
-$myPets = $pemilikObj->getMyPets($iduser);
+$controller = new PemilikController();
+$iduser = $_SESSION['user']['id'];
+$namauser = $_SESSION['user']['nama'];
+$myPets = $controller->listHewan($iduser);
 
 function esc($v)
 {
@@ -28,64 +22,73 @@ function esc($v)
 
 <head>
     <meta charset="UTF-8">
-    <title>Hewan Saya</title>
+    <title>🐾 Hewan Saya</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 min-h-screen flex flex-col">
 
-    <nav class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center">
+    <!-- 🔹 Navbar -->
+    <nav class="bg-blue-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
         <h1 class="text-xl font-bold">🐾 Daftar Hewan Peliharaan Saya</h1>
         <span>👋 Halo, <?= esc($namauser); ?></span>
     </nav>
 
-    <main class="container mx-auto p-6 flex-grow">
-        <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-lg font-semibold mb-4">🐶 Hewan Terdaftar</h2>
+    <!-- 🔸 Konten Utama -->
+    <main class="container mx-auto px-6 py-8 flex-grow">
+        <div class="bg-white rounded-xl shadow-lg p-6 overflow-hidden">
 
-            <?php if ($myPets): ?>
-                <table class="w-full border-collapse shadow-sm">
-                    <thead class="bg-blue-900 text-white">
-                        <tr>
-                            <th class="px-4 py-2 text-left">No</th>
-                            <th class="px-4 py-2 text-left">Nama</th>
-                            <th class="px-4 py-2 text-left">Jenis Hewan</th>
-                            <th class="px-4 py-2 text-left">Ras</th>
-                            <th class="px-4 py-2 text-left">Jenis Kelamin</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        <?php $no = 1;
-                        foreach ($myPets as $row): ?>
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="px-4 py-2"><?= $no++; ?></td>
-                                <td class="px-4 py-2 font-medium text-gray-800"><?= htmlspecialchars($row['nama']); ?></td>
-                                <td class="px-4 py-2"><?= htmlspecialchars($row['jenis_hewan']); ?></td>
-                                <td class="px-4 py-2"><?= htmlspecialchars($row['ras']); ?></td>
-                                <td class="px-4 py-2">
-                                    <?= $row['jenis_kelamin'] === 'B' ? 'Betina' : 'Jantan'; ?>
-                                </td>
+            <h2 class="text-2xl font-bold text-blue-900 border-b-4 border-blue-900 pb-3 mb-6">
+                🐶 Hewan Terdaftar
+            </h2>
+
+            <?php if (!empty($myPets)): ?>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-fixed border-collapse">
+                        <thead class="bg-blue-900 text-white">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-sm font-semibold w-[10%] break-words">No</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold w-[25%] break-words">Nama</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold w-[25%] break-words">Jenis Hewan</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold w-[20%] break-words">Ras</th>
+                                <th class="px-4 py-3 text-left text-sm font-semibold w-[20%] break-words">Jenis Kelamin</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 text-gray-800">
+                            <?php $no = 1; foreach ($myPets as $p): ?>
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="px-4 py-3"><?= $no++; ?></td>
+                                    <td class="px-4 py-3 font-medium"><?= esc($p['nama']); ?></td>
+                                    <td class="px-4 py-3"><?= esc($p['jenis_hewan']); ?></td>
+                                    <td class="px-4 py-3"><?= esc($p['ras']); ?></td>
+                                    <td class="px-4 py-3">
+                                        <?= $p['jenis_kelamin'] === 'B' ? 'Betina' : 'Jantan'; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             <?php else: ?>
-                <p class="text-gray-500 italic">Belum ada hewan terdaftar di akun ini.</p>
+                <div class="text-center py-12 text-gray-500 italic">
+                    <p>Belum ada hewan terdaftar di akun ini 🐾</p>
+                </div>
             <?php endif; ?>
-
         </div>
+
+        <!-- Tombol Kembali -->
         <div class="mt-6">
             <a href="../Pemilik_Dashboard.php"
-                class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
-                ⬅ Kembali ke Pemilik Dashboard
+                class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">
+                ⬅ Kembali ke Rekam Medis
             </a>
         </div>
     </main>
 
-    <footer class="bg-blue-900 text-white py-4 text-center">
-        <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga</p>
+    <!-- 🔹 Footer -->
+    <footer class="bg-blue-900 text-white py-4 text-center mt-auto shadow-inner">
+        <p class="text-blue-200 text-sm">&copy; 2025 RSHP Universitas Airlangga — Sistem Informasi Klinik Hewan</p>
     </footer>
 
 </body>
-
 </html>

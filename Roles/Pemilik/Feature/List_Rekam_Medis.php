@@ -10,7 +10,8 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Pemilik') {
 $controller = new PemilikController();
 $iduser = $_SESSION['user']['id'];
 $namauser = $_SESSION['user']['nama'];
-$reservasiSaya = $controller->listReservasi($iduser);
+
+$rekamMedisSaya = $controller->listRekamMedis($iduser);
 
 function esc($v)
 {
@@ -22,7 +23,7 @@ function esc($v)
 
 <head>
     <meta charset="UTF-8">
-    <title>📅 Reservasi Saya</title>
+    <title>🩺 Rekam Medis Saya</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -31,7 +32,7 @@ function esc($v)
     <!-- 🔹 Navbar -->
     <nav class="bg-blue-900 text-white px-8 py-5 flex justify-between items-center shadow-md">
         <h1 class="text-2xl font-bold flex items-center gap-2">
-            📅 Daftar Reservasi Saya
+            🩺 Rekam Medis Saya
         </h1>
         <span class="text-lg">👋 Halo, <strong><?= esc($namauser); ?></strong></span>
     </nav>
@@ -40,48 +41,37 @@ function esc($v)
     <main class="container mx-auto px-10 py-10 flex-grow">
         <div class="bg-white rounded-2xl shadow-lg p-8 w-full">
             <h2 class="text-2xl font-bold mb-6 text-blue-900 border-b-4 border-blue-900 pb-3 flex items-center gap-2">
-                🐕 Jadwal Temu Dokter
+                📋 Daftar Rekam Medis
             </h2>
 
-            <?php if ($reservasiSaya): ?>
+            <?php if ($rekamMedisSaya): ?>
                 <div class="overflow-x-auto">
                     <table class="w-full border-collapse text-base text-gray-800 table-fixed">
                         <thead class="bg-blue-900 text-white">
                             <tr>
                                 <th class="px-4 py-3 text-left font-semibold w-[5%] break-words">No</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Nama Hewan</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Jenis Hewan</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Dokter</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Nomor Temu</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[20%] break-words">Tanggal Temu</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Status</th>
+                                <th class="px-4 py-3 text-left font-semibold w-[20%] break-words">Nama Hewan</th>
+                                <th class="px-4 py-3 text-left font-semibold w-[20%] break-words">Dokter</th>
+                                <th class="px-4 py-3 text-left font-semibold w-[30%] break-words">Diagnosa</th>
+                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Tanggal</th>
+                                <th class="px-4 py-3 text-center font-semibold w-[10%] break-words">Aksi</th>
                             </tr>
                         </thead>
 
                         <tbody class="divide-y divide-gray-200">
                             <?php $no = 1;
-                            foreach ($reservasiSaya as $r): ?>
-                                <?php
-                                $status = $r['status'] ?? 'U';
-                                $map = [
-                                    'S' => ['✅ Selesai', 'bg-green-100 text-green-800 border-green-300'],
-                                    'B' => ['❌ Dibatalkan', 'bg-red-100 text-red-800 border-red-300'],
-                                    'P' => ['⏳ Menunggu', 'bg-yellow-100 text-yellow-800 border-yellow-300'],
-                                    'U' => ['⚪ Belum Diproses', 'bg-gray-100 text-gray-800 border-gray-300']
-                                ];
-                                [$label, $class] = $map[$status];
-                                ?>
+                            foreach ($rekamMedisSaya as $r): ?>
                                 <tr class="hover:bg-gray-50 transition">
                                     <td class="px-4 py-3 font-medium"><?= $no++; ?></td>
                                     <td class="px-4 py-3"><?= esc($r['nama_pet']); ?></td>
-                                    <td class="px-4 py-3"><?= esc($r['jenis_hewan']); ?></td>
                                     <td class="px-4 py-3"><?= esc($r['nama_dokter']); ?></td>
-                                    <td class="px-4 py-3"><?= esc($r['no_temu']); ?></td>
-                                    <td class="px-4 py-3"><?= esc($r['tanggal']); ?></td>
-                                    <td class="px-4 py-3">
-                                        <span class="<?= $class ?> px-3 py-1 rounded-full text-sm border font-medium">
-                                            <?= $label ?>
-                                        </span>
+                                    <td class="px-4 py-3"><?= esc($r['diagnosa']); ?></td>
+                                    <td class="px-4 py-3"><?= date('d M Y', strtotime($r['tanggal'])); ?></td>
+                                    <td class="px-4 py-3 text-center">
+                                        <a href="List_Detail_Rekam_Medis.php?idrekam_medis=<?= $r['idrekam_medis']; ?>"
+                                            class="inline-flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-1.5 rounded-lg shadow transition">
+                                            🔍 Detail
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -90,7 +80,7 @@ function esc($v)
                 </div>
             <?php else: ?>
                 <div class="text-center py-12 text-gray-500 italic text-lg">
-                    <p>Belum ada reservasi untuk akun ini 📋</p>
+                    <p>Belum ada rekam medis untuk akun ini 📋</p>
                 </div>
             <?php endif; ?>
         </div>
@@ -110,5 +100,4 @@ function esc($v)
     </footer>
 
 </body>
-
 </html>
