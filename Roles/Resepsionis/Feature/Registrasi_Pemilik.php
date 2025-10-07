@@ -6,51 +6,118 @@
 
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasi Pemilik</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="bg-light">
-    <div class="container mt-5">
-        <div class="card shadow-lg">
-            <div class="card-header bg-primary text-white">
-                <h3>Registrasi Pemilik</h3>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    <!-- Navigasi -->
+    <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-xl">📝</span>
+                <span class="font-bold text-lg">Registrasi Pemilik</span>
             </div>
-            <div class="card-body">
-                <?php if (!empty($notif)): ?>
-                    <div class="alert alert-info"><?= $notif ?></div>
-                <?php endif; ?>
+            
+            <div class="flex items-center gap-4">
+                <a href="../resepsionis_dashboard.php" class="relative font-medium pb-1 group inline-block">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                    Logout
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
-                <form method="post" action="../../../Controller/Resepsionis_register_process.php">
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control" name="nama" required>
+    <div class="container mx-auto px-4 py-8 flex-grow">
+        <div class="max-w-2xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-blue-900 mb-2">📝 Registrasi Pemilik Baru</h2>
+                <p class="text-gray-600">Daftarkan pemilik hewan peliharaan baru ke sistem</p>
+            </div>
+
+            <!-- Alert Message -->
+            <?php if (!empty($notif)): ?>
+                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-900 p-4 mb-6 rounded-lg">
+                    <?= $notif ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Form Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <form method="post" action="../../../Controller/Resepsionis_register_process.php" class="space-y-6">
+                    <!-- Nama Lengkap -->
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nama Lengkap <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="nama" id="nama" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan nama lengkap" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" required>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                            Email <span class="text-red-500">*</span>
+                        </label>
+                        <input type="email" name="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="contoh@email.com" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" required>
+
+                    <!-- Password -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                            Password <span class="text-red-500">*</span>
+                        </label>
+                        <input type="password" name="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan password" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="no_wa" class="form-label">Nomor WhatsApp</label>
-                        <input type="text" class="form-control" name="no_wa" required>
+
+                    <!-- Nomor WhatsApp -->
+                    <div>
+                        <label for="no_wa" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nomor WhatsApp <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="no_wa" id="no_wa" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="08xxxxxxxxxx" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="alamat" class="form-label">Alamat</label>
-                        <textarea class="form-control" name="alamat" required></textarea>
+
+                    <!-- Alamat -->
+                    <div>
+                        <label for="alamat" class="block text-sm font-medium text-gray-700 mb-2">
+                            Alamat <span class="text-red-500">*</span>
+                        </label>
+                        <textarea name="alamat" id="alamat" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Masukkan alamat lengkap" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success">Daftar</button>
-                    <a href="../resepsionis_dashboard.php" class="btn btn-secondary">Kembali</a>
+
+                    <!-- Info Note -->
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                        <p class="text-sm text-blue-900">
+                            <span class="font-semibold">Info:</span> Pastikan semua data diisi dengan benar. Data ini akan digunakan untuk keperluan komunikasi dan administrasi.
+                        </p>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-4 pt-4">
+                        <button type="submit" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+                            ✓ Daftar Sekarang
+                        </button>
+                        <a href="../resepsionis_dashboard.php" class="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg text-center transition-colors duration-300">
+                            ⬅ Kembali
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</body>
 
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
+        <div class="container mx-auto text-center">
+            <p class="text-blue-200">&copy; 2024 RSHP Universitas Airlangga. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
 </html>
