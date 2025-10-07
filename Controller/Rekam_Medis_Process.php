@@ -13,23 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         if ($action === 'create') {
-            $rekamObj->create($_POST['idreservasi'], $_POST['diagnosa'], $_POST['catatan']);
+            $rekamObj->create($_POST['idreservasi'], $_POST['diagnosa'], $_POST['catatan'], $_POST['temuan_klinis']);
             $_SESSION['msg'] = "✅ Rekam medis berhasil ditambahkan.";
-        } elseif ($action === 'update') {
-            $rekamObj->update($_POST['idrekam_medis'], $_POST['diagnosa'], $_POST['catatan']);
-            $_SESSION['msg'] = "✅ Rekam medis berhasil diperbarui.";
-        } elseif ($action === 'delete') {
-            $rekamObj->delete($_POST['idrekam_medis']);
-            $_SESSION['msg'] = "✅ Rekam medis berhasil dihapus.";
-        } elseif ($action === 'add_detail') {
-            $detailObj->create($_POST['idrekam_medis'], $_POST['idtindakan'], $_POST['hasil']);
-            $_SESSION['msg'] = "✅ Detail rekam medis berhasil ditambahkan.";
-        } elseif ($action === 'update_detail') {
-            $detailObj->update($_POST['iddetail'], $_POST['idtindakan'], $_POST['hasil']);
-            $_SESSION['msg'] = "✅ Detail rekam medis berhasil diperbarui.";
-        } elseif ($action === 'delete_detail') {
-            $detailObj->delete($_POST['iddetail']);
-            $_SESSION['msg'] = "✅ Detail rekam medis berhasil dihapus.";
         }
     } catch (Exception $e) {
         $_SESSION['msg'] = "❌ Error: " . $e->getMessage();

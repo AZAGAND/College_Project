@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pemilik->create();
 
         $_SESSION['notif'] = "✅ Pemilik berhasil didaftarkan!";
-        header("Location: ../Roles/Resepsionis/Feature/Registrasi_Form.php");
+        header("Location: ../Roles/Resepsionis/Feature/Registrasi_Pemilik.php");
     } catch (Exception $e) {
         $_SESSION['notif'] = "❌ Error: " . $e->getMessage();
-        header("Location: ../Roles/Resepsionis/Feature/Registrasi_Form.php");
+        header("Location: ../Roles/Resepsionis/Feature/Registrasi_Pemilik.php");
         exit;
     }
 }

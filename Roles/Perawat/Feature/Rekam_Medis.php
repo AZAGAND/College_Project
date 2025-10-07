@@ -16,6 +16,11 @@ $allRekam = $rekamObj->getAll();
 
 $msg = $_SESSION['msg'] ?? '';
 unset($_SESSION['msg']);
+
+function esc($val) {
+    return htmlspecialchars($val ?? '', ENT_QUOTES, 'UTF-8');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -103,6 +108,15 @@ unset($_SESSION['msg']);
                             placeholder="Catatan tambahan">
                     </div>
 
+                    <!-- Temuan Klinis -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Temuan Klinis</label>
+                        <input type="text" name="temuan_klinis"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Masukkan temuan klinis pasien" required>
+                    </div>
+
+
                     <!-- Tombol -->
                     <div class="flex items-end">
                         <button type="submit"
@@ -125,8 +139,11 @@ unset($_SESSION['msg']);
                             <th class="px-4 py-3 text-left font-semibold">Pemilik</th>
                             <th class="px-4 py-3 text-left font-semibold">Pet</th>
                             <th class="px-4 py-3 text-left font-semibold">Diagnosa</th>
-                            <th class="px-4 py-3 text-left font-semibold">Catatan</th>
+                            <th class="px-4 py-3 text-left font-semibold">Anamnesa</th>
+                            <th class="px-4 py-3 text-left font-semibold">temuan klinis</th>
+                            <th class="px-4 py-3 text-left font-semibold">Dokter Pemeriksa</th>
                             <th class="px-4 py-3 text-left font-semibold">Tanggal</th>
+                            <th class="px-4 py-3 text-left font-semibold">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -141,7 +158,16 @@ unset($_SESSION['msg']);
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pet']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['diagnosa']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['catatan']); ?></td>
+                                <td class="px-4 py-4 text-gray-700"><?= esc($row['temuan_klinis']); ?></td>
+                                <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_dokter']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['tanggal']); ?></td>
+                                <td class="px-4 py-4">
+                                    <a href="Detail_Rekam_Medis.php?idrekam_medis=<?= $row['idrekam_medis']; ?>"
+                                        class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
+                                        🔍 Lihat Detail
+                                    </a>
+                                </td>
+
                                 <input type="hidden" name="idrekam_medis" value="<?= $row['idrekam_medis']; ?>">
                             </tr>
                         <?php endforeach; ?>
@@ -162,7 +188,7 @@ unset($_SESSION['msg']);
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
         <div class="container mx-auto text-center">
-            <p class="text-blue-200">&copy; 2024 RSHP Universitas Airlangga. All rights reserved.</p>
+            <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga. All rights reserved.</p>
         </div>
     </footer>
 </body>

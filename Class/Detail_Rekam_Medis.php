@@ -9,22 +9,24 @@ class RekamMedisDetail {
     }
 
     // CREATE
-    public function create($idrekam_medis, $idtindakan, $hasil) {
-        $sql = "INSERT INTO rekam_medis_detail (idrekam_medis, idtindakan, hasil) 
-                VALUES (:idrekam_medis, :idtindakan, :hasil)";
+    public function create($idrekam_medis, $idkode_tindakan_terapi, $detail) {
+        $sql = "INSERT INTO detail_rekam_medis (idrekam_medis, idkode_tindakan_terapi, detail) 
+                VALUES (:idrekam_medis, :idkode_tindakan_terapi, :detail)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':idrekam_medis' => $idrekam_medis,
-            ':idtindakan' => $idtindakan,
-            ':hasil' => $hasil
+            ':idkode_tindakan_terapi' => $idkode_tindakan_terapi,
+            ':detail' => $detail
         ]);
     }
 
     // READ
     public function getByRekamMedis($idrekam_medis) {
-        $sql = "SELECT d.*, t.kode, t.deskripsi_tindakan_terapi
-                FROM rekam_medis_detail d
-                JOIN kode_tindakan_terapi t ON d.idtindakan = t.idkode_tindakan_terapi
+        $sql = "SELECT d.iddetail_rekam_medis, d.detail, 
+                       t.kode, t.deskripsi_tindakan_terapi
+                FROM detail_rekam_medis d
+                JOIN kode_tindakan_terapi t 
+                    ON d.idkode_tindakan_terapi = t.idkode_tindakan_terapi
                 WHERE d.idrekam_medis = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':id' => $idrekam_medis]);
@@ -32,22 +34,22 @@ class RekamMedisDetail {
     }
 
     // UPDATE
-    public function update($iddetail, $idtindakan, $hasil) {
-        $sql = "UPDATE rekam_medis_detail 
-                SET idtindakan = :idtindakan, hasil = :hasil
-                WHERE iddetail = :id";
+    public function update($iddetail_rekam_medis, $idkode_tindakan_terapi, $detail) {
+        $sql = "UPDATE detail_rekam_medis 
+                SET idkode_tindakan_terapi = :idkode_tindakan_terapi, detail = :detail
+                WHERE iddetail_rekam_medis = :id";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            ':id' => $iddetail,
-            ':idtindakan' => $idtindakan,
-            ':hasil' => $hasil
+            ':id' => $iddetail_rekam_medis,
+            ':idkode_tindakan_terapi' => $idkode_tindakan_terapi,
+            ':detail' => $detail
         ]);
     }
 
     // DELETE
-    public function delete($iddetail) {
-        $sql = "DELETE FROM rekam_medis_detail WHERE iddetail = :id";
+    public function delete($iddetail_rekam_medis) {
+        $sql = "DELETE FROM detail_rekam_medis WHERE iddetail_rekam_medis = :id";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([':id' => $iddetail]);
+        return $stmt->execute([':id' => $iddetail_rekam_medis]);
     }
 }
