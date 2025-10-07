@@ -41,6 +41,9 @@ class Login
             'roles' => $roles
         ];
 
+        $_SESSION['iduser'] = $user['iduser'];
+        $_SESSION['nama'] = $user['nama'];
+
         // Kalau cuma 1 role → redirect langsung
         $baseUrl = "/PHP_Native_Web_OOP-Modul4";
 
@@ -60,6 +63,9 @@ class Login
                     break;
                 case 'resepsionis':
                     header("Location: {$baseUrl}/Roles/Resepsionis/Resepsionis_Dashboard.php");
+                    break;
+                case 'pemilik':
+                    header("Location: {$baseUrl}/Roles/Pemilik/pemilik_dashboard.php");
                     break;
                 default:
                     return "Role tidak dikenali!";
