@@ -50,7 +50,7 @@ $nama = $_SESSION['nama'] ?? 'Pemilik';
             </a>
 
             <!-- Reservasi Saya -->
-            <a href="Feature/Reservasi_List.php"
+            <a href="Feature/List_Reservasi.php"
                 class="bg-white shadow-lg hover:shadow-xl p-6 rounded-xl border border-gray-200 transition transform hover:-translate-y-1">
                 <div class="text-4xl mb-3">📅</div>
                 <h3 class="text-xl font-semibold text-blue-900 mb-2">Reservasi Saya</h3>

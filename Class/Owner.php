@@ -102,7 +102,32 @@ class Pemilik extends User
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getMyReservations($iduser)
+{
+    $idpemilik = $this->getIdPemilikByUser($iduser);
+    if (!$idpemilik) return [];
 
+    $sql = "SELECT 
+                td.idreservasi_dokter,
+                td.no_temu,
+                p.nama AS nama_pet,
+                j.nama_jenis_hewan AS jenis_hewan,
+                d.nama AS nama_dokter,
+                td.tanggal,
+                td.status
+            FROM temu_dokter td
+            JOIN pet p ON td.idpet = p.idpet
+            JOIN ras_hewan r ON p.idras_hewan = r.idras_hewan
+            JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan
+            JOIN role_user ru ON td.idrole_user = ru.idrole_user
+            JOIN user d ON ru.iduser = d.iduser
+            WHERE p.idpemilik = :idpemilik
+            ORDER BY td.tanggal DESC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':idpemilik' => $idpemilik]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
     // 🔹 Ambil semua rekam medis berdasarkan pemilik login
