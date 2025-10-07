@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once __DIR__ . '/../DB/dbconnection.php';
-require_once __DIR__ . '/../Class/RekamMedis.php';
-require_once __DIR__ . '/../Class/Rekam_Medis_Detail.php';
+require_once __DIR__ . '/../Class/Rekam_Medis.php';
+require_once __DIR__ . '/../Class/Detail_Rekam_Medis.php';
 
 $db = new DBConnection();
 $rekamObj = new RekamMedis($db);
@@ -35,6 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['msg'] = "❌ Error: " . $e->getMessage();
     }
 
-    header("Location: ../Roles/Perawat/RekamMedis.php");
+    header("Location: ../Roles/Perawat/Feature/Rekam_Medis.php");
     exit;
 }
