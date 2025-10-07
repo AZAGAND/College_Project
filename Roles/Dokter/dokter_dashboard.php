@@ -111,7 +111,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             </a>
 
             <!-- Menu 2: Rekam Medis -->
-            <a href="Rekam_Medis/Rekam_Medis_Dokter.php" class="group">
+            <a href="Feature/Rekam_Medis_Dokter.php" class="group">
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform group-hover:-translate-y-2">
                     <div class="bg-gradient-to-r from-green-500 to-green-600 p-6">
                         <div class="text-6xl text-white mb-2">📋</div>
