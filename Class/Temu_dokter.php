@@ -70,7 +70,7 @@ class TemuDokter
             JOIN user d ON ru.iduser = d.iduser
             JOIN ras_hewan rh ON p.idras_hewan = rh.idras_hewan
             JOIN jenis_hewan jh ON rh.idjenis_hewan = jh.idjenis_hewan
-            ORDER BY td.tanggal DESC";
+            ORDER BY td.tanggal ASC";
         return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 

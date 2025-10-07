@@ -160,16 +160,6 @@ unset($_SESSION['msg']);
                                     <td class="px-4 py-4 text-center text-gray-700"><?= $row['nama_dokter'] ?></td>
                                     <td class="px-4 py-4 text-center">
                                         <div class="flex items-center justify-center gap-2">
-                                            <!-- Form Edit -->
-                                            <form method="post" action="../../../Controller/Temu_Dokter_Process.php" class="inline-block">
-                                                <input type="hidden" name="action" value="update">
-                                                <input type="hidden" name="no_temu" value="<?= $row['no_temu'] ?>">
-                                                <input type="hidden" name="iddokter" value="<?= $row['iddokter'] ?? '' ?>">
-                                                <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                                                    ✏️ Edit
-                                                </button>
-                                            </form>
-
                                             <!-- Form Delete -->
                                             <form method="post" action="../../../Controller/Temu_Dokter_Process.php" class="inline-block">
                                                 <input type="hidden" name="action" value="delete">
@@ -208,7 +198,7 @@ unset($_SESSION['msg']);
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
         <div class="container mx-auto text-center">
-            <p class="text-blue-200">&copy; 2024 RSHP Universitas Airlangga. All rights reserved.</p>
+            <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga. All rights reserved.</p>
         </div>
     </footer>
 </body>

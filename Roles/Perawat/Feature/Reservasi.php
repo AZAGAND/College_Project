@@ -156,7 +156,7 @@ $dokter = $reservasi->getAllDokter();
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
         <div class="container mx-auto text-center">
-            <p class="text-blue-200">&copy; 2024 RSHP Universitas Airlangga. All rights reserved.</p>
+            <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga. All rights reserved.</p>
         </div>
     </footer>
 </body>

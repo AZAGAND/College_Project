@@ -91,7 +91,7 @@ unset($_SESSION['success'], $_SESSION['error']);
                 <table class="w-full">
                     <thead class="bg-blue-900 text-white">
                         <tr>
-                            <th class="px-4 py-3 text-left font-semibold">ID</th>
+                            <th class="px-4 py-3 text-left font-semibold w-16">No</th>
                             <th class="px-4 py-3 text-left font-semibold">Nama</th>
                             <th class="px-4 py-3 text-left font-semibold">Email</th>
                             <th class="px-4 py-3 text-left font-semibold">Role</th>
@@ -100,29 +100,40 @@ unset($_SESSION['success'], $_SESSION['error']);
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <?php if (!empty($allUsers)): ?>
-                            <?php foreach ($allUsers as $u): ?>
+                            <?php $no = 1;
+                            foreach ($allUsers as $u): ?>
                                 <tr class="hover:bg-gray-50 transition-colors">
-                                    <td class="px-4 py-4 text-gray-800 font-medium"><?= $u['iduser'] ?></td>
-                                    <td class="px-4 py-4 text-gray-800"><?= htmlspecialchars($u['nama']) ?></td>
-                                    <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($u['email']) ?></td>
+                                    <!-- Nomor Urut -->
+                                    <td class="px-4 py-4 text-gray-800 font-medium"><?= $no++; ?></td>
+
+                                    <!-- Nama -->
+                                    <td class="px-4 py-4 text-gray-800"><?= htmlspecialchars($u['nama']); ?></td>
+
+                                    <!-- Email -->
+                                    <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($u['email']); ?></td>
+
+                                    <!-- Role -->
                                     <td class="px-4 py-4 text-gray-700">
-                                        <?= htmlspecialchars($u['nama_role'] ?? 'Belum ada role') ?></td>
+                                        <?= htmlspecialchars($u['nama_role'] ?? 'Belum ada role'); ?>
+                                    </td>
+
+                                    <!-- Aksi -->
                                     <td class="px-4 py-4 text-center">
                                         <div class="flex items-center justify-center gap-2">
-                                            <a href="User_manage/edit_user.php?id=<?= $u['iduser'] ?>"
+                                            <a href="User_manage/edit_user.php?id=<?= $u['iduser']; ?>"
                                                 class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors">
                                                 ✏️ Edit
                                             </a>
-                                            <a href="User_manage/Ganti_Password.php?id=<?= $u['iduser'] ?>"
+                                            <a href="User_manage/Ganti_Password.php?id=<?= $u['iduser']; ?>"
                                                 onclick="return confirm('Ganti password user ini?')"
                                                 class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors">
                                                 🔑 Ganti Password
                                             </a>
-                                            <!-- <a href="/PHP_Native_Web_OOP-Modul4/Views/Data_Master/Data_User/User_manage/Ganti_Email.php?id=<?= $u['iduser'] ?>"
-                                                onclick="return confirm('Ganti email user ini?')"
-                                                class="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors">
-                                                📧 Ganti Email
-                                            </a> -->
+                                            <button
+                                                onclick="hapusUser(<?= $u['iduser']; ?>, '<?= htmlspecialchars($u['nama']); ?>')"
+                                                class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                                                🗑️ Hapus
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -139,9 +150,30 @@ unset($_SESSION['success'], $_SESSION['error']);
                             </tr>
                         <?php endif; ?>
                     </tbody>
+
                 </table>
             </div>
         </div>
+
+        <script>
+            function hapusUser(id, nama) {
+                if (confirm(`Yakin ingin menghapus user "${nama}"? Aksi ini tidak bisa dibatalkan!`)) {
+                    // Bikin form sementara buat kirim POST
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '../../Controller/Data_User_Process.php';
+
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'iduser';
+                    input.value = id;
+                    form.appendChild(input);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            }
+        </script>
 
         <!-- 🔸 Tombol Kembali -->
         <div class="mt-6">
