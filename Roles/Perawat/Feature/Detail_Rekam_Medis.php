@@ -133,18 +133,60 @@ function esc($val)
                                 <td class="py-2 px-3"><?= esc($d['deskripsi_tindakan_terapi']); ?></td>
                                 <td class="py-2 px-3"><?= esc($d['detail']); ?></td>
                                 <td class="py-2 px-3 text-center">
+                                    <!-- Tombol Edit -->
+                                    <button type="button" onclick="toggleEditForm(<?= $d['iddetail_rekam_medis']; ?>)"
+                                        class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded">
+                                        ✏️ Edit
+                                    </button>
+
+                                    <!-- Form Hapus -->
                                     <form method="POST"
                                         action="/PHP_Native_Web_OOP-Modul4/Controller/Detail_Rekam_Medis_Process.php"
-                                        onsubmit="return confirm('Yakin ingin menghapus detail ini?')" class="inline-block">
+                                        onsubmit="return confirm('Yakin ingin menghapus detail ini?')"
+                                        class="inline-block ml-2">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="iddetail_rekam_medis"
                                             value="<?= esc($d['iddetail_rekam_medis']); ?>">
+                                        <input type="hidden" name="idrekam_medis" value="<?= esc($idrekam); ?>">
                                         <button type="submit"
                                             class="bg-red-600 hover:bg-red-700 text-white text-sm px-3 py-1 rounded">
                                             🗑️ Hapus
                                         </button>
                                     </form>
+
+                                    <!-- Form Edit (disembunyikan awalnya) -->
+                                    <form id="editForm-<?= $d['iddetail_rekam_medis']; ?>" method="POST"
+                                        action="/PHP_Native_Web_OOP-Modul4/Controller/Detail_Rekam_Medis_Process.php"
+                                        class="hidden mt-2 bg-gray-50 p-3 rounded border border-gray-300">
+                                        <input type="hidden" name="action" value="update">
+                                        <input type="hidden" name="iddetail_rekam_medis"
+                                            value="<?= esc($d['iddetail_rekam_medis']); ?>">
+                                        <input type="hidden" name="idrekam_medis" value="<?= esc($idrekam); ?>">
+
+                                        <!-- Pilihan tindakan -->
+                                        <select name="idkode_tindakan_terapi"
+                                            class="w-full px-3 py-1 border border-gray-300 rounded mb-2">
+                                            <?php foreach ($tindakanList as $t): ?>
+                                                <option value="<?= esc($t['idkode_tindakan_terapi']); ?>" <?= $t['kode'] === $d['kode'] ? 'selected' : ''; ?>>
+                                                    <?= esc($t['kode']); ?> - <?= esc($t['deskripsi_tindakan_terapi']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+
+                                        <!-- Kolom detail -->
+                                        <input type="text" name="detail" value="<?= esc($d['detail']); ?>"
+                                            class="w-full px-3 py-1 border border-gray-300 rounded mb-2"
+                                            placeholder="Edit detail tindakan..." required>
+
+                                        <div class="flex justify-end gap-2">
+                                            <button type="button" onclick="toggleEditForm(<?= $d['iddetail_rekam_medis']; ?>)"
+                                                class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded">Batal</button>
+                                            <button type="submit"
+                                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">Simpan</button>
+                                        </div>
+                                    </form>
                                 </td>
+
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -154,6 +196,13 @@ function esc($val)
                     <?php endif; ?>
                 </tbody>
             </table>
+            <script>
+                function toggleEditForm(id) {
+                    const form = document.getElementById('editForm-' + id);
+                    form.classList.toggle('hidden');
+                }
+            </script>
+
         </div>
         <div class="mt-6">
             <a href="Rekam_Medis.php"
