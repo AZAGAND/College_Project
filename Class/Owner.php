@@ -109,7 +109,7 @@ class Pemilik extends User
 
     $sql = "SELECT 
                 td.idreservasi_dokter,
-                td.no_temu,
+                td.no_urut,
                 p.nama AS nama_pet,
                 j.nama_jenis_hewan AS jenis_hewan,
                 d.nama AS nama_dokter,

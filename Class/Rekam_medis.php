@@ -46,7 +46,7 @@ class RekamMedis
                     rm.anamnesa AS catatan,
                     rm.temuan_klinis,
                     rm.created_at AS tanggal,
-                    td.no_temu,
+                    td.no_urut,
                     u.nama AS nama_pemilik,
                     hewan.nama AS nama_pet,
                     du.nama AS nama_dokter
@@ -72,7 +72,7 @@ class RekamMedis
                 rm.anamnesa,
                 rm.temuan_klinis,
                 rm.created_at,
-                td.no_temu,
+                td.no_urut,
                 pm.idpemilik,
                 p.nama AS nama_pemilik,
                 pt.nama AS nama_pet
@@ -91,8 +91,8 @@ class RekamMedis
 
     public function getAllReservasi()
     {
-        $sql = "SELECT idreservasi_dokter, no_temu 
-                FROM temu_dokter 
+        $sql = "SELECT idreservasi_dokter, no_urut 
+                FROM temu_dokter
                 ORDER BY idreservasi_dokter DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();

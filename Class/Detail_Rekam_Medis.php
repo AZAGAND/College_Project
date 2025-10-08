@@ -23,7 +23,7 @@ class RekamMedisDetail {
     // READ
     public function getByRekamMedis($idrekam_medis) {
         $sql = "SELECT d.iddetail_rekam_medis, d.detail, 
-                       t.kode, t.deskripsi_tindakan_terapi
+                        t.kode, t.deskripsi_tindakan_terapi
                 FROM detail_rekam_medis d
                 JOIN kode_tindakan_terapi t 
                     ON d.idkode_tindakan_terapi = t.idkode_tindakan_terapi

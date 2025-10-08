@@ -125,7 +125,7 @@ unset($_SESSION['msg']);
                     <thead class="bg-blue-900 text-white">
                         <tr>
                             <th class="px-4 py-3 text-center font-semibold">No</th>
-                            <th class="px-4 py-3 text-center font-semibold">No Temu</th>
+                            <th class="px-4 py-3 text-center font-semibold">No Reservasi</th>
                             <th class="px-4 py-3 text-center font-semibold">Tanggal</th>
                             <th class="px-4 py-3 text-center font-semibold">Nama Pet</th>
                             <th class="px-4 py-3 text-center font-semibold">Jenis Hewan</th>
@@ -142,7 +142,7 @@ unset($_SESSION['msg']);
                                     <td class="px-4 py-4 text-center text-gray-900 font-medium"><?= $no++ ?></td>
                                     <td class="px-4 py-4 text-center">
                                         <span class="inline-block bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                            <?= $row['no_temu'] ?>
+                                            <?= $row['no_urut'] ?>
                                         </span>
                                     </td>
                                     <td class="px-4 py-4 text-center text-gray-700">
@@ -163,7 +163,7 @@ unset($_SESSION['msg']);
                                             <!-- Form Delete -->
                                             <form method="post" action="../../../Controller/Temu_Dokter_Process.php" class="inline-block">
                                                 <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="no_temu" value="<?= $row['no_temu'] ?>">
+                                                <input type="hidden" name="no_temu" value="<?= $row['no_urut'] ?>">
                                                 <button class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors" onclick="return confirm('Yakin hapus jadwal ini?')">
                                                     🗑️ Hapus
                                                 </button>

@@ -11,39 +11,45 @@ class TemuDokter
     }
 
     // 🔹 Generate nomor temu dokter (format: DMY-urutan harian)
-    private function generateNoTemu()
+    private function generateNoUrut()
     {
-        $tanggalKode = date('dmy'); // contoh: 180925
-        $sql = "SELECT no_temu
-                FROM temu_dokter
-                WHERE no_temu LIKE :kode
-                ORDER BY no_temu DESC
-                LIMIT 1";
+        $tanggalKode = date('dmy'); // contoh: 081025
+
+        // Ambil data no_urut terakhir yang dimulai dengan tanggal hari ini
+        $sql = "SELECT no_urut
+            FROM temu_dokter
+            WHERE no_urut LIKE :kode
+            ORDER BY no_urut DESC
+            LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':kode' => $tanggalKode . '%']);
         $lastRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $nextUrut = 1;
         if ($lastRow) {
-            $parts = explode('-', $lastRow['no_temu']);
-            if (isset($parts[1])) {
-                $nextUrut = intval($parts[1]) + 1;
-            }
+            // Ambil 1 digit terakhir dari angka terakhir (tanpa explode karena gak ada '-')
+            $lastNo = $lastRow['no_urut'];
+            // Ambil bagian setelah 6 digit tanggal, misal 0810252 → ambil "2"
+            $nextUrut = intval(substr($lastNo, 6)) + 1;
         }
 
-        return $tanggalKode . '-' . $nextUrut;
+        // Gabungkan jadi angka murni tanpa strip
+        $noUrutFinal = intval($tanggalKode . $nextUrut);
+
+        return $noUrutFinal;
     }
+
 
     // 🔹 CREATE
     public function create($idpet, $iddokter)
     {
-        $no_temu = $this->generateNoTemu();
+        $no_urut = $this->generateNoUrut();
 
-        $sql = "INSERT INTO temu_dokter (no_temu, idpet, idrole_user, tanggal) 
-            VALUES (:no_temu, :idpet, :idrole_user, NOW())";
+        $sql = "INSERT INTO temu_dokter (no_urut, idpet, idrole_user, tanggal) 
+            VALUES (:no_urut, :idpet, :idrole_user, NOW())";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            ':no_temu' => $no_temu,
+            ':no_urut' => $no_urut,
             ':idpet' => $idpet,
             ':idrole_user' => $iddokter
         ]);
@@ -55,7 +61,7 @@ class TemuDokter
     // READ ALL
     public function getAll()
     {
-        $sql = "SELECT td.no_temu,
+        $sql = "SELECT td.no_urut,
                     td.tanggal,
                     p.nama AS nama_pet,
                     jh.nama_jenis_hewan AS jenis_hewan,
@@ -80,7 +86,7 @@ class TemuDokter
     // READ BY NO
     public function getByNo($no_temu)
     {
-        $sql = "SELECT td.no_temu,
+        $sql = "SELECT td.no_urut,
                     td.tanggal,
                     pt.nama AS nama_pet,
                     u.nama AS nama_pemilik,
@@ -98,24 +104,24 @@ class TemuDokter
 
 
     // 🔹 UPDATE
-    public function update($no_temu, $keluhan, $iddokter)
+    public function update($no_urut, $keluhan, $iddokter)
     {
-        $sql = "UPDATE temu_dokter 
+        $sql = "UPDATE temu_dokter
                 SET keluhan = :keluhan, iddokter = :iddokter 
-                WHERE no_temu = :no";
+                WHERE no_urut = :no";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
-            ':no' => $no_temu,
+            ':no' => $no_urut,
             ':iddokter' => $iddokter
         ]);
     }
 
     // 🔹 DELETE
-    public function delete($no_temu)
+    public function delete($no_urut)
     {
         $sql = "DELETE FROM temu_dokter WHERE no_temu = :no";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([':no' => $no_temu]);
+        return $stmt->execute([':no' => $no_urut]);
     }
 
     public function getAllPemilik()

@@ -92,7 +92,7 @@ function esc($val)
                                 <td class="px-4 py-4 text-gray-700">
                                     <span
                                         class="font-semibold text-blue-900"><?= htmlspecialchars($row['idreservasi']); ?></span>
-                                    <span class="text-gray-500">- <?= htmlspecialchars($row['no_temu']); ?></span>
+                                    <span class="text-gray-500">- <?= htmlspecialchars($row['no_urut']); ?></span>
                                 </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pemilik']); ?></td>
                                 <td class="px-4 py-4 text-gray-700">

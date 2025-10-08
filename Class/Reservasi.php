@@ -14,7 +14,7 @@ class Reservasi
     {
         $sql = "SELECT 
                     td.idreservasi_dokter, 
-                    td.no_temu, 
+                    td.no_urut, 
                     td.tanggal, 
                     td.status,
                     p.nama AS nama_pet, 
@@ -62,7 +62,7 @@ class Reservasi
     // 🔹 Tambah reservasi baru
     public function create($idpet, $idrole_user)
     {
-        $sql = "INSERT INTO temu_dokter (no_temu, idpet, idrole_user, status, tanggal)
+        $sql = "INSERT INTO temu_dokter (no_urut, idpet, idrole_user, status, tanggal)
                 VALUES (CONCAT('TM', LPAD(FLOOR(RAND()*9999),4,'0')), :idpet, :idrole_user, 'P', NOW())";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([

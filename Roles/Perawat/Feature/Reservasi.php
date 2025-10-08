@@ -73,7 +73,7 @@ $dokter = $reservasi->getAllDokter();
                                     <td class="px-4 py-4 text-center text-gray-900 font-medium"><?= $no++ ?></td>
                                     <td class="px-4 py-4 text-center">
                                         <span class="inline-block bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                            <?= htmlspecialchars($row['no_temu']) ?>
+                                            <?= htmlspecialchars($row['no_urut']) ?>
                                         </span>
                                     </td>
                                     <td class="px-4 py-4 text-center text-gray-700 font-medium">

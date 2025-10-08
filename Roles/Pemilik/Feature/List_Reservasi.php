@@ -52,7 +52,7 @@ function esc($v)
                                 <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Nama Hewan</th>
                                 <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Jenis Hewan</th>
                                 <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Dokter</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Nomor Temu</th>
+                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Nomor Reservasi</th>
                                 <th class="px-4 py-3 text-left font-semibold w-[20%] break-words">Tanggal Temu</th>
                                 <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Status</th>
                             </tr>
@@ -76,7 +76,7 @@ function esc($v)
                                     <td class="px-4 py-3"><?= esc($r['nama_pet']); ?></td>
                                     <td class="px-4 py-3"><?= esc($r['jenis_hewan']); ?></td>
                                     <td class="px-4 py-3"><?= esc($r['nama_dokter']); ?></td>
-                                    <td class="px-4 py-3"><?= esc($r['no_temu']); ?></td>
+                                    <td class="px-4 py-3"><?= esc($r['no_urut']); ?></td>
                                     <td class="px-4 py-3"><?= esc($r['tanggal']); ?></td>
                                     <td class="px-4 py-3">
                                         <span class="<?= $class ?> px-3 py-1 rounded-full text-sm border font-medium">

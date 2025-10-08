@@ -23,20 +23,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         elseif ($action === 'update') {
-            $no_temu  = $_POST['no_temu'] ?? null;
+            $no_temu  = $_POST['no_urut'] ?? null;
             $keluhan  = $_POST['keluhan'] ?? '';
             $iddokter = $_POST['iddokter'] ?? null;
 
             if ($no_temu && $iddokter) {
-                $temuObj->update($no_temu, $keluhan, $iddokter);
+                $temuObj->update($no_urut, $keluhan, $iddokter);
                 $_SESSION['msg'] = "✏️ Data temu dokter berhasil diperbarui!";
             }
         }
 
         elseif ($action === 'delete') {
-            $no_temu = $_POST['no_temu'] ?? '';
-            if ($no_temu) {
-                $temuObj->delete($no_temu);
+            $no_temu = $_POST['no_urut'] ?? '';
+            if ($no_urut) {
+                $temuObj->delete($no_urut);
                 $_SESSION['msg'] = "🗑️ Temu dokter berhasil dihapus!";
             }
         }

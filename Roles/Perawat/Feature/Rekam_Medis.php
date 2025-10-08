@@ -87,7 +87,7 @@ function esc($val)
                             <?php foreach ($reservasiList as $r): ?>
                                 <option value="<?= htmlspecialchars($r['idreservasi_dokter']); ?>">
                                     <?= htmlspecialchars($r['idreservasi_dokter']); ?> -
-                                    <?= htmlspecialchars($r['no_temu']); ?>
+                                    <?= htmlspecialchars($r['no_urut']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -153,7 +153,7 @@ function esc($val)
                             <tr class="hover:bg-gray-50 transition-colors">
                                 <td class="px-4 py-4 text-gray-900 font-medium"><?= $no++; ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['idreservasi']); ?> -
-                                    <?= htmlspecialchars($row['no_temu']); ?>
+                                    <?= htmlspecialchars($row['no_urut']); ?>
                                 </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pemilik']); ?></td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pet']); ?></td>
