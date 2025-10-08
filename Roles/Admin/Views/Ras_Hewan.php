@@ -73,6 +73,17 @@ $groupedData = $rasObj->getGroupedData();
         </div>
     </nav>
 
+    <?php if (isset($_SESSION['notif'])): ?>
+        <div class="max-w-3xl mx-auto mt-6">
+            <div
+                class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative text-center shadow-md">
+                <?= htmlspecialchars($_SESSION['notif']); ?>
+            </div>
+        </div>
+        <?php unset($_SESSION['notif']); // hapus notif setelah tampil ?>
+    <?php endif; ?>
+
+
     <!-- Konten Utama -->
     <main class="flex-grow container mx-auto px-4 py-8">
         <!-- Header -->
@@ -85,15 +96,11 @@ $groupedData = $rasObj->getGroupedData();
         <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
             <h3 class="text-xl font-semibold text-blue-900 mb-4">➕ Tambah Ras Baru</h3>
             <form method="post" class="flex flex-col md:flex-row gap-4">
-                <input type="text" 
-                       name="nama_ras" 
-                       placeholder="Nama Ras" 
-                       required
-                       class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                
-                <select name="idjenis" 
-                        required
-                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <input type="text" name="nama_ras" placeholder="Nama Ras" required
+                    class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+
+                <select name="idjenis" required
+                    class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">-- Pilih Jenis Hewan --</option>
                     <?php foreach ($dataJenis as $j): ?>
                         <option value="<?= $j['idjenis_hewan']; ?>">
@@ -101,10 +108,9 @@ $groupedData = $rasObj->getGroupedData();
                         </option>
                     <?php endforeach; ?>
                 </select>
-                
-                <button type="submit" 
-                        name="tambah" 
-                        class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300 whitespace-nowrap">
+
+                <button type="submit" name="tambah"
+                    class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300 whitespace-nowrap">
                     ➕ Tambah Ras
                 </button>
             </form>
@@ -124,26 +130,30 @@ $groupedData = $rasObj->getGroupedData();
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <?php if (!empty($groupedData)): ?>
-                            <?php $no = 1; foreach ($groupedData as $data): ?>
+                            <?php $no = 1;
+                            foreach ($groupedData as $data): ?>
                                 <tr class="hover:bg-gray-50 transition-colors">
                                     <td class="px-4 py-4 text-center text-gray-900 font-medium">
                                         <?= $no++; ?>
                                     </td>
                                     <td class="px-4 py-4 text-center">
-                                        <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold">
+                                        <span
+                                            class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold">
                                             <?= htmlspecialchars($data['jenis_nama']); ?>
                                         </span>
                                     </td>
                                     <td class="px-4 py-4">
                                         <div class="flex flex-wrap gap-2 justify-center">
                                             <?php foreach ($data['ras_list'] as $ras): ?>
-                                                <div class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors group">
+                                                <div
+                                                    class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors group">
                                                     <span class="text-gray-800 font-medium text-sm">
                                                         <?= htmlspecialchars($ras['nama']); ?>
                                                     </span>
-                                                    <button onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
-                                                            title="Hapus <?= htmlspecialchars($ras['nama']); ?>"
-                                                            class="text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold transition-colors">
+                                                    <button
+                                                        onclick="if(confirm('Yakin hapus ras <?= htmlspecialchars($ras['nama']); ?>?')) { window.location.href='?hapus=<?= $ras['id']; ?>'; }"
+                                                        title="Hapus <?= htmlspecialchars($ras['nama']); ?>"
+                                                        class="text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold transition-colors">
                                                         ✕
                                                     </button>
                                                 </div>
@@ -151,7 +161,7 @@ $groupedData = $rasObj->getGroupedData();
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-center">
-                                        <a href="edit_jenis.php?id=<?= $data['jenis_id']; ?>" 
+                                        <a href="Feature/edit_ras_hewan.php?id=<?= $ras['id']; ?>"
                                             class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                             ✏️ Edit
                                         </a>

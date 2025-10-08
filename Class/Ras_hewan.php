@@ -51,4 +51,28 @@ class RasHewan
         $sql = "SELECT * FROM jenis_hewan";
         return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getRasByJenis($idjenis)
+    {
+        $sql = "SELECT r.idras_hewan, r.nama_ras, j.nama_jenis_hewan
+            FROM ras_hewan r
+            JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan
+            WHERE r.idjenis_hewan = ?
+            ORDER BY r.nama_ras ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idjenis]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getJenisByRasId($idras)
+    {
+        $sql = "SELECT j.idjenis_hewan, j.nama_jenis_hewan
+            FROM ras_hewan r
+            JOIN jenis_hewan j ON r.idjenis_hewan = j.idjenis_hewan
+            WHERE r.idras_hewan = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$idras]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

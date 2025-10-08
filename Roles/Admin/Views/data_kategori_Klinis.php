@@ -64,10 +64,10 @@ unset($_SESSION['msg']);
             <form method="post" action="../../../Controller/KategoriKlinis_Process.php" class="flex flex-col md:flex-row gap-4">
                 <input type="hidden" name="action" value="create">
                 <input type="text" 
-                       name="nama_kategori_klinis" 
-                       class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" 
-                       placeholder="Nama kategori klinis baru"
-                       required>
+                        name="nama_kategori_klinis" 
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" 
+                        placeholder="Nama kategori klinis baru"
+                        required>
                 <button type="submit" 
                         class="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300 whitespace-nowrap">
                     ➕ Tambah
@@ -105,10 +105,10 @@ unset($_SESSION['msg']);
                                                 <input type="hidden" name="action" value="update">
                                                 <input type="hidden" name="idkategori_klinis" value="<?= $row['idkategori_klinis'] ?>">
                                                 <input type="text" 
-                                                       name="nama_kategori_klinis" 
-                                                       value="<?= htmlspecialchars($row['nama_kategori_klinis']) ?>" 
-                                                       class="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-                                                       required>
+                                                        name="nama_kategori_klinis" 
+                                                        value="<?= htmlspecialchars($row['nama_kategori_klinis']) ?>" 
+                                                        class="px-3 py-1 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                                        required>
                                                 <button type="submit" 
                                                         class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors whitespace-nowrap">
                                                     ✏️ Update
