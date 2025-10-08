@@ -47,6 +47,7 @@ class PemilikController
         $details = $this->detail->getByRekamMedis($idrekam);
         $idpemilik = $this->pemilik->getIdPemilikByUser($iduser);
 
+        
         if (!$rekam || $rekam['idpemilik'] != $idpemilik) {
             throw new Exception("Akses ditolak! Rekam medis tidak milik Anda.");
         }
@@ -63,17 +64,17 @@ class PemilikController
         switch ($page) {
             case 'hewan':
                 $data = $this->listHewan($iduser);
-                include __DIR__ . '/../Roles/Pemilik/Feature/List_Hewan_View.php';
+                include __DIR__ . '/../Roles/Pemilik/Feature/List_Hewan.php';
                 break;
 
             case 'reservasi':
                 $data = $this->listReservasi($iduser);
-                include __DIR__ . '/../Roles/Pemilik/Feature/List_Reservasi_View.php';
+                include __DIR__ . '/../Roles/Pemilik/Feature/List_Reservasi.php';
                 break;
 
             case 'rekam_medis':
                 $data = $this->listRekamMedis($iduser);
-                include __DIR__ . '/../Roles/Pemilik/Feature/Rekam_Medis_List_View.php';
+                include __DIR__ . '/../Roles/Pemilik/Feature/List_Rekam_Medis.php';
                 break;
 
             case 'rekam_detail':
@@ -81,7 +82,7 @@ class PemilikController
                 if (!$idrekam)
                     throw new Exception("ID Rekam tidak valid.");
                 $data = $this->detailRekamMedis($idrekam, $iduser);
-                include __DIR__ . '/../Roles/Pemilik/Feature/Rekam_Medis_Detail_View.php';
+                include __DIR__ . '/../Roles/Pemilik/Feature/List_Detail_Rekam_Medis.php';
                 break;
 
             default:

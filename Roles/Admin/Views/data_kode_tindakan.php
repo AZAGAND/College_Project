@@ -34,7 +34,7 @@ unset($_SESSION['msg']);
             <div class="flex items-center gap-4">
                 <span class="text-blue-100">Halo, <span
                         class="font-semibold"><?= $_SESSION['nama'] ?? 'Admin'; ?></span></span>
-                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                <a href="../../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
                     Logout
                     <span
                         class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>

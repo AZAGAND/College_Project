@@ -10,7 +10,6 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['role'] !== 'Pemilik') {
 $controller = new PemilikController();
 $iduser = $_SESSION['user']['id'];
 $namauser = $_SESSION['user']['nama'];
-
 $rekamMedisSaya = $controller->listRekamMedis($iduser);
 
 function esc($v)

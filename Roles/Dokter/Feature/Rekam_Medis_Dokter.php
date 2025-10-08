@@ -18,13 +18,15 @@ function esc($val)
 ?>
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Rekam Medis (Dokter)</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50">
+
+<body class="flex flex-col min-h-screen h-full bg-gray-50"">
     <!-- Navigasi -->
     <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -32,7 +34,8 @@ function esc($val)
             <div class="flex items-center gap-4">
                 <a href="../Dokter_Dashboard.php" class="relative font-medium pb-1 group inline-block">
                     ← Home
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
                 </a>
                 <div class="h-6 w-px bg-blue-700"></div>
                 <div class="flex items-center gap-2">
@@ -40,13 +43,15 @@ function esc($val)
                     <span class="font-bold text-lg">Data Rekam Medis</span>
                 </div>
             </div>
-            
+
             <!-- User Info & Logout -->
             <div class="flex items-center gap-4">
-                <span class="text-blue-100">Halo, <span class="font-semibold"><?= htmlspecialchars($_SESSION['nama'] ?? 'Dokter'); ?></span></span>
+                <span class="text-blue-100">Halo, <span
+                        class="font-semibold"><?= htmlspecialchars($_SESSION['nama'] ?? 'Dokter'); ?></span></span>
                 <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
                     Logout
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
                 </a>
             </div>
         </div>
@@ -57,7 +62,8 @@ function esc($val)
         <!-- Header Section -->
         <div class="bg-gradient-to-r from-blue-900 to-blue-700 rounded-xl shadow-lg p-8 mb-8 text-white">
             <h1 class="text-4xl font-bold mb-3">📋 Daftar Rekam Medis</h1>
-            <p class="text-blue-100 text-lg">Lihat dan kelola rekam medis pasien hewan peliharaan yang telah diperiksa.</p>
+            <p class="text-blue-100 text-lg">Lihat dan kelola rekam medis pasien hewan peliharaan yang telah diperiksa.
+            </p>
         </div>
 
         <!-- Table Section -->
@@ -84,18 +90,22 @@ function esc($val)
                             <tr class="hover:bg-blue-50 transition-colors">
                                 <td class="px-4 py-4 text-gray-900 font-medium"><?= $no++; ?></td>
                                 <td class="px-4 py-4 text-gray-700">
-                                    <span class="font-semibold text-blue-900"><?= htmlspecialchars($row['idreservasi']); ?></span>
+                                    <span
+                                        class="font-semibold text-blue-900"><?= htmlspecialchars($row['idreservasi']); ?></span>
                                     <span class="text-gray-500">- <?= htmlspecialchars($row['no_temu']); ?></span>
                                 </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_pemilik']); ?></td>
                                 <td class="px-4 py-4 text-gray-700">
-                                    <span class="font-medium text-gray-900"><?= htmlspecialchars($row['nama_pet']); ?></span>
+                                    <span
+                                        class="font-medium text-gray-900"><?= htmlspecialchars($row['nama_pet']); ?></span>
                                 </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['diagnosa']); ?></td>
-                                <td class="px-4 py-4 text-gray-700 max-w-xs truncate" title="<?= htmlspecialchars($row['catatan']); ?>">
+                                <td class="px-4 py-4 text-gray-700 max-w-xs truncate"
+                                    title="<?= htmlspecialchars($row['catatan']); ?>">
                                     <?= htmlspecialchars($row['catatan']); ?>
                                 </td>
-                                <td class="px-4 py-4 text-gray-700 max-w-xs truncate" title="<?= htmlspecialchars($row['temuan_klinis']); ?>">
+                                <td class="px-4 py-4 text-gray-700 max-w-xs truncate"
+                                    title="<?= htmlspecialchars($row['temuan_klinis']); ?>">
                                     <?= htmlspecialchars($row['temuan_klinis']); ?>
                                 </td>
                                 <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($row['nama_dokter']); ?></td>
@@ -123,7 +133,8 @@ function esc($val)
                     <div class="text-3xl">💡</div>
                     <div>
                         <h3 class="font-bold text-blue-900 mb-2">Informasi</h3>
-                        <p class="text-gray-700 leading-relaxed">Klik tombol <strong>Detail</strong> untuk melihat informasi lengkap rekam medis pasien, termasuk tindakan terapi yang telah dilakukan.</p>
+                        <p class="text-gray-700 leading-relaxed">Klik tombol <strong>Detail</strong> untuk melihat
+                            informasi lengkap rekam medis pasien, termasuk tindakan terapi yang telah dilakukan.</p>
                     </div>
                 </div>
             </div>
@@ -131,10 +142,11 @@ function esc($val)
     </div>
 
     <!-- Footer -->
-    <footer class="bg-blue-900 text-white py-6 px-4 mt-12">
+    <footer class="bg-blue-900 text-white py-6 px-4 mt-auto">
         <div class="container mx-auto text-center">
             <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga. All rights reserved.</p>
         </div>
     </footer>
 </body>
+
 </html>

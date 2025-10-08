@@ -14,10 +14,10 @@ class TemuDokter
     private function generateNoTemu()
     {
         $tanggalKode = date('dmy'); // contoh: 180925
-        $sql = "SELECT no_temu 
-                FROM temu_dokter 
-                WHERE no_temu LIKE :kode 
-                ORDER BY no_temu DESC 
+        $sql = "SELECT no_temu
+                FROM temu_dokter
+                WHERE no_temu LIKE :kode
+                ORDER BY no_temu DESC
                 LIMIT 1";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([':kode' => $tanggalKode . '%']);

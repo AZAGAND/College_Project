@@ -73,6 +73,7 @@ class RekamMedis
                 rm.temuan_klinis,
                 rm.created_at,
                 td.no_temu,
+                pm.idpemilik,
                 p.nama AS nama_pemilik,
                 pt.nama AS nama_pet
             FROM rekam_medis rm

@@ -1,105 +1,210 @@
 <?php
-// ✅ Semua data dikirim dari controller process()
-$rekam = $data['rekam'] ?? [];
-$details = $data['details'] ?? [];
-$namauser = $_SESSION['user']['nama'] ?? 'Pemilik';
+session_start();
+require_once __DIR__ . '/../../../DB/dbconnection.php';
+require_once __DIR__ . '/../../../Class/Rekam_Medis.php';
+require_once __DIR__ . '/../../../Class/Detail_Rekam_Medis.php';
 
-function esc($v)
+$db = new DBConnection();
+$rekamObj = new RekamMedis($db);
+$detailObj = new RekamMedisDetail($db);
+
+$idrekam = $_GET['idrekam_medis'] ?? null;
+if (!$idrekam) {
+    header("Location: Rekam_Medis.php");
+    exit;
+}
+$rekam = $rekamObj->getById($idrekam);
+$details = $detailObj->getByRekamMedis($idrekam);
+if (!$rekam) {
+    die('
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Data Tidak Ditemukan</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-700">
+        <div class="bg-white shadow-lg rounded-xl p-10 text-center border border-gray-200">
+            <div class="text-6xl mb-4">📄</div>
+            <h2 class="text-2xl font-bold text-blue-900 mb-2">Data Rekam Medis Tidak Ditemukan</h2>
+            <p class="text-gray-600 mb-6">Pastikan ID rekam medis yang Anda pilih valid atau masih terdaftar.</p>
+            <a href="List_Rekam_Medis.php"
+                class="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold transition duration-300">
+                ⬅ Kembali ke Daftar Rekam Medis
+            </a>
+        </div>
+    </body>
+    </html>');
+}
+function esc($val)
 {
-    return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars($val ?? '', ENT_QUOTES, 'UTF-8');
 }
 ?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
-    <title>🩺 Detail Rekam Medis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Rekam Medis (Dokter)</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-    <!-- 🔹 Navbar -->
-    <nav class="bg-blue-900 text-white px-8 py-5 flex justify-between items-center shadow-md">
-        <h1 class="text-2xl font-bold flex items-center gap-2">
-            🩺 Detail Rekam Medis
-        </h1>
-        <span class="text-lg">👋 Halo, <strong><?= esc($namauser); ?></strong></span>
+<body class="bg-gray-50">
+    <!-- Navigasi -->
+    <nav class="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Brand / Nama -->
+            <div class="flex items-center gap-4">
+                <a href="List_Rekam_Medis.php" class="relative font-medium pb-1 group inline-block">
+                    ← Kembali
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <div class="h-6 w-px bg-blue-700"></div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🩺</span>
+                    <span class="font-bold text-lg">Detail Rekam Medis</span>
+                </div>
+            </div>
+            
+            <!-- User Info & Logout -->
+            <div class="flex items-center gap-4">
+                <span class="text-blue-100">Halo, <span class="font-semibold"><?= htmlspecialchars($_SESSION['nama'] ?? 'Dokter'); ?></span></span>
+                <a href="../../Views/Logout.php" class="relative font-medium pb-1 group inline-block">
+                    Logout
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </div>
+        </div>
     </nav>
 
-    <!-- 🔸 Konten Utama -->
-    <main class="container mx-auto px-10 py-10 flex-grow">
-        <div class="bg-white rounded-2xl shadow-lg p-8 w-full">
-            <h2 class="text-2xl font-bold text-blue-900 border-b-4 border-blue-900 pb-3 mb-6 flex items-center gap-2">
-                🐕 <?= esc($rekam['nama_pet'] ?? '-') ?>
-                <span class="text-gray-700 text-lg">(<?= esc($rekam['jenis_hewan'] ?? '-') ?>)</span>
-            </h2>
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-blue-900 to-blue-700 rounded-xl shadow-lg p-8 mb-8 text-white">
+            <h1 class="text-4xl font-bold mb-3">📋 Detail Rekam Medis Pasien</h1>
+            <p class="text-blue-100 text-lg">Informasi lengkap pemeriksaan dan tindakan terapi yang telah dilakukan.</p>
+        </div>
 
-            <div class="space-y-2 mb-6 text-gray-800">
-                <p><strong>👨‍⚕️ Dokter Pemeriksa:</strong> <?= esc($rekam['nama_dokter'] ?? '-') ?></p>
-                <p><strong>📅 Tanggal Pemeriksaan:</strong>
-                    <?= isset($rekam['created_at']) ? date('d M Y, H:i', strtotime($rekam['created_at'])) : '-' ?>
-                </p>
+        <!-- Informasi Pasien -->
+        <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <h2 class="text-2xl font-bold text-blue-900 mb-6 pb-3 border-b-2 border-blue-100">👤 Informasi Pasien</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">🐾</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Nama Hewan</p>
+                            <p class="text-lg font-semibold text-gray-900"><?= htmlspecialchars($rekam['nama_pet']); ?></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">👨‍👩‍👧</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Pemilik</p>
+                            <p class="text-lg font-semibold text-gray-900"><?= htmlspecialchars($rekam['nama_pemilik']); ?></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">📅</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Tanggal Pemeriksaan</p>
+                            <p class="text-lg font-semibold text-gray-900"><?= htmlspecialchars($rekam['created_at']); ?></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">🔬</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Diagnosa</p>
+                            <p class="text-lg font-semibold text-gray-900"><?= htmlspecialchars($rekam['diagnosa']); ?></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">📝</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Anamnesa</p>
+                            <p class="text-gray-700"><?= htmlspecialchars($rekam['anamnesa']); ?></p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                        <span class="text-2xl">🩺</span>
+                        <div>
+                            <p class="text-sm text-gray-500 font-medium">Temuan Klinis</p>
+                            <p class="text-gray-700"><?= htmlspecialchars($rekam['temuan_klinis']); ?></p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <hr class="my-6">
+        <!-- Daftar Tindakan Terapi -->
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-2xl font-bold text-blue-900 mb-6 pb-3 border-b-2 border-blue-100">💉 Detail Tindakan Terapi</h3>
 
-            <!-- 🔹 Diagnosa -->
-            <h3 class="text-xl font-semibold text-blue-800 mb-3 flex items-center gap-2">📋 Diagnosa</h3>
-            <div class="bg-gray-50 rounded-lg p-4 shadow-inner mb-8 text-gray-700 leading-relaxed">
-                <p><strong>Anamnesa:</strong> <?= esc($rekam['anamnesa'] ?? '-') ?></p>
-                <p><strong>Temuan Klinis:</strong> <?= esc($rekam['temuan_klinis'] ?? '-') ?></p>
-                <p><strong>Diagnosa:</strong> <?= esc($rekam['diagnosa'] ?? '-') ?></p>
-            </div>
-
-            <!-- 🔹 Detail Tindakan -->
-            <h3 class="text-xl font-semibold text-blue-800 mb-3 flex items-center gap-2">💉 Detail Tindakan</h3>
-            <?php if (!empty($details)): ?>
+            <?php if ($details): ?>
                 <div class="overflow-x-auto">
-                    <table class="w-full border-collapse text-base text-gray-800 table-fixed">
+                    <table class="w-full">
                         <thead class="bg-blue-900 text-white">
                             <tr>
-                                <th class="px-4 py-3 text-left font-semibold w-[10%] break-words">No</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[15%] break-words">Kode</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[35%] break-words">Deskripsi</th>
-                                <th class="px-4 py-3 text-left font-semibold w-[40%] break-words">Detail</th>
+                                <th class="px-4 py-3 text-left font-semibold">No</th>
+                                <th class="px-4 py-3 text-left font-semibold">Kode</th>
+                                <th class="px-4 py-3 text-left font-semibold">Deskripsi Tindakan</th>
+                                <th class="px-4 py-3 text-left font-semibold">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <?php $no = 1;
                             foreach ($details as $d): ?>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-4 py-3 font-medium"><?= $no++; ?></td>
-                                    <td class="px-4 py-3"><?= esc($d['kode'] ?? '-') ?></td>
-                                    <td class="px-4 py-3"><?= esc($d['deskripsi_tindakan_terapi'] ?? '-') ?></td>
-                                    <td class="px-4 py-3"><?= esc($d['detail'] ?? '-') ?></td>
+                                <tr class="hover:bg-blue-50 transition-colors">
+                                    <td class="px-4 py-4 text-gray-900 font-medium"><?= $no++; ?></td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-block bg-blue-100 text-blue-900 px-3 py-1 rounded-lg font-semibold text-sm">
+                                            <?= htmlspecialchars($d['kode']); ?>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($d['deskripsi_tindakan_terapi']); ?></td>
+                                    <td class="px-4 py-4 text-gray-700"><?= htmlspecialchars($d['detail']); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
             <?php else: ?>
-                <div class="text-center py-10 text-gray-500 italic text-lg">
-                    <p>Belum ada tindakan tercatat 💭</p>
+                <div class="text-center py-12">
+                    <div class="text-6xl mb-4">📭</div>
+                    <p class="text-gray-500 text-lg italic">Belum ada tindakan terapi yang tercatat untuk pasien ini.</p>
                 </div>
             <?php endif; ?>
         </div>
 
-        <!-- 🔸 Tombol Kembali -->
-        <div class="mt-6">
-            <a href="List_Rekam_Medis.php"
-                class="inline-block bg-gray-600 hover:bg-gray-700 text-white font-semibold px-6 py-3 rounded-lg transition">
-                ⬅ Kembali ke Rekam Medis
-            </a>
+        <!-- Quick Info -->
+        <div class="mt-8">
+            <div class="bg-blue-50 border-l-4 border-blue-900 rounded-lg p-6">
+                <div class="flex items-start gap-4">
+                    <div class="text-3xl">💡</div>
+                    <div>
+                        <h3 class="font-bold text-blue-900 mb-2">Informasi</h3>
+                        <p class="text-gray-700 leading-relaxed">Data rekam medis ini mencatat seluruh pemeriksaan dan tindakan terapi yang telah dilakukan. Pastikan semua informasi terisi dengan lengkap dan akurat.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <!-- 🔹 Footer -->
-    <footer class="bg-blue-900 text-white py-5 text-center mt-auto shadow-inner">
-        <p class="text-blue-200 text-base">&copy; 2025 RSHP Universitas Airlangga — Sistem Informasi Klinik Hewan</p>
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-6 px-4 mt-12">
+        <div class="container mx-auto text-center">
+            <p class="text-blue-200">&copy; 2025 RSHP Universitas Airlangga. All rights reserved.</p>
+        </div>
     </footer>
-
 </body>
-
 </html>
